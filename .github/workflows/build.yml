@@ -30,8 +30,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y luajit rgbds  
   
       - name: Build disassembly and ROM  
-        working-directory: LSDisJ  
-        run: make VERSION=${{ matrix.version }}  
+        run: make -C LSDisJ VERSION=${{ matrix.version }}  
   
       - name: Upload artifact  
         uses: actions/upload-artifact@v4  
