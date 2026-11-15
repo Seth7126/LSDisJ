@@ -30,13 +30,14 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y luajit rgbds  
   
       - name: Build disassembly and ROM  
+        working-directory: LSDisJ  
         run: make VERSION=${{ matrix.version }}  
   
       - name: Upload artifact  
         uses: actions/upload-artifact@v4  
         with:  
           name: lsdj-${{ matrix.version }}  
-          path: build/${{ matrix.version }}/lsdj.gb  
+          path: LSDisJ/build/${{ matrix.version }}/lsdj.gb  
   
   release:  
     needs: build  
