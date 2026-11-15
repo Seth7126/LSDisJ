@@ -1,0 +1,55 @@
+name: Build and Release  
+  
+on:  
+  push:  
+    tags: ["v*"]  
+  workflow_dispatch:  
+    inputs:  
+      tag:  
+        description: "Release tag name"  
+        required: true  
+        default: "v1.0.0"  
+  
+permissions:  
+  contents: write  
+  
+jobs:  
+  build:  
+    runs-on: ubuntu-latest  
+    strategy:  
+      fail-fast: false  
+      matrix:  
+        version: ["9.2.L", "8.5.1"]  
+    steps:  
+      - name: Checkout repository with submodules  
+        uses: actions/checkout@v4  
+        with:  
+          submodules: recursive  
+  
+      - name: Install LuaJIT and rgbds  
+        run: sudo apt-get update && sudo apt-get install -y luajit rgbds  
+  
+      - name: Build disassembly and ROM  
+        run: make VERSION=${{ matrix.version }}  
+  
+      - name: Upload artifact  
+        uses: actions/upload-artifact@v4  
+        with:  
+          name: lsdj-${{ matrix.version }}  
+          path: build/${{ matrix.version }}/lsdj.gb  
+  
+  release:  
+    needs: build  
+    runs-on: ubuntu-latest  
+    steps:  
+      - name: Download all artifacts  
+        uses: actions/download-artifact@v4  
+        with:  
+          path: artifacts  
+  
+      - name: Create GitHub release  
+        uses: softprops/action-gh-release@v2  
+        with:  
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}  
+          files: artifacts/**/lsdj.gb  
+          generate_release_notes: true
