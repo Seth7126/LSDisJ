@@ -1,0 +1,19 @@
+#!/usr/bin/env luajit
+
+local beast = require("beast")
+
+local options = beast.cli.parse_args(arg)
+
+-- Parse symbols file
+local symbols = beast.symbol.Symbols:new(options)
+if options.symbols_path then
+   symbols:read_symbols(io.open(options.symbols_path, "rb"))
+end
+
+-- Parse ROM file
+local rom = beast.rom.Rom:new(options)
+rom:read_rom(symbols, io.open(options.rom_path, "rb"))
+
+-- Output assembly code
+local formatter = beast.format.Formatter:new(options)
+formatter:generate_files(options.out_path, rom, symbols)

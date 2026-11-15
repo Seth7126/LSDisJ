@@ -1,0 +1,2861 @@
+; This disassembly is only partially complete.
+
+;; 00:0000 Most RSTs are unused
+00:0000 rst_00
+00:0001 .data:0007
+00:0008 rst_08
+00:0008 .data:0008
+00:0010 rst_10
+;; 00:0011 Does nothing, used for breakpoints
+00:0018 rst_18
+;; 00:001e Does nothing, used for breakpoints
+00:0020 rst_20
+00:0020 .data:0008
+00:0028 rst_28
+00:0028 .data:0008
+00:0030 rst_30
+00:0030 .data:0008
+00:0038 rst_trigger_crash
+;; 00:0039 Does nothing, used for breakpoints
+00:003c .data:0004
+
+00:0040 vblank_interrupt
+00:0043 .data:0005
+00:0048 lcdc_interrupt
+00:004f .data:0001
+00:0050 timer_overflow_interrupt
+00:0053 .data:0005
+00:0058 serial_transfer_complete_interrupt
+00:005b .data:0005
+00:0060 joypad_transition_interrupt
+00:0061 jump_00_0061
+00:0061 .code:0008
+;; 00:0066 Jumps to 01:731b
+00:0069 .data:0097
+
+00:0100 Boot
+
+00:0104 HeaderLogo
+00:0134 HeaderTitle
+00:013f HeaderManufacturerCode
+;; 00:0143 Game supports CGB functions, but works on old gameboys also
+00:0143 HeaderCGBFlag
+00:0144 HeaderNewLicenseeCode
+;; 00:0146 No SGB functions (Normal Gameboy or CGB only game)
+00:0146 HeaderSGBFlag
+;; 00:0147 MBC5+RAM+BATTERY, ROM Size: 1 MB, RAM Size: 128 KB
+00:0147 HeaderCartridgeType
+00:0148 HeaderROMSize
+00:0149 HeaderRAMSize
+;; 00:014a Destination is Japanese
+00:014a HeaderDestinationCode
+00:014b HeaderOldLicenseeCode
+00:014c HeaderMaskROMVersion
+;; 00:014d Checksums automatically calculated with rgbfix
+00:014d HeaderComplementCheck
+00:014e HeaderGlobalChecksum
+
+00:0150 code_start
+;; 00:0150 gbdk 2.95 libc/gb/crt0.s:.code_start (with modifications)
+;; 00:0152 Store CPU type 2 in E
+;; 00:0155 Initialize stack at 0xe0000 instead of 0xc000 in gbdk
+00:015f .code_start_1
+;; 00:0166 Skip clearing from 0xfe00 to 0xfeff
+;; 00:0166 Clear from 0xff80 to 0xffff
+00:016b .code_start_2
+;; 00:0173 Store CPU type 2
+;; 00:0187 Skip copying refresh_OAM routine to HIRAM and installing interrupt routines
+;; 00:0198 V-Blank on, don't enable serial I/O yet
+;; 00:019c Don't turn sound off yet
+;; 00:01a7 Skip erasing the malloc list and gsinit
+
+00:01ac .data:0034
+00:01e0 .data:01b1
+00:01e0 MODE_TABLE
+;; 00:01e0 gbdk 2.95 libc/gb/crt0.s:.MODE_TABLE
+;; 00:01e0 Jump table for modes
+
+;; 00:04d9 Exec dynamic instructions from call_init_samples
+
+00:07b4 call_00_07b4
+
+00:07fe .data:00dc
+00:08da wav_instr_play_type_strings
+00:08da .text:0024
+00:08fe .data:0099
+
+00:0997 call_00_0997
+
+00:09e2 call_00_09e2
+
+00:0a48 note_labels
+00:0a48 .text:0005
+00:0a4d .text:0036
+00:0a71 .text:0036
+00:0a95 .text:0036
+00:0ab9 .text:0036
+00:0add .text:0036
+00:0b01 .text:0036
+00:0b25 .text:0036
+00:0b49 .text:0036
+00:0b6d .text:0034
+00:0b8f .data:00d9
+
+00:0cb9 call_00_0cb9
+
+00:0d20 call_00_0d20
+
+00:0dca call_banked_call_old
+;; 00:0dca Call a subroutine in another bank.
+;; 00:0dca This version of call_banked_call uses extra instructions.
+;; 00:0dca Args: bank, address (word)
+;; 00:0dca Registers used: A, HL
+00:0de7 call_banked_call_old_return
+;; 00:0de7 Doesn't appear to actually do anything with register B or E
+
+00:0df5 call_banked_call_set_bank_old
+;; 00:0df5 Call a subroutine in another bank, then set the bank.
+;; 00:0df5 This version of call_banked_call_set_bank uses extra instructions.
+;; 00:0df5
+;; 00:0df5 Args: bank, address (word), new_bank
+;; 00:0df5
+;; 00:0df5 Exit conditions:
+;; 00:0df5   The bank register (0x2000) will be set to new_bank
+;; 00:0df5
+;; 00:0df5 Registers used: A, HL
+00:0e16 call_banked_call_set_bank_old_return
+
+00:0e26 call_00_0e26
+
+00:0e5b call_00_0e5b
+
+00:0e91 call_00_0e91
+
+00:0eca call_00_0eca
+
+00:0f03 call_00_0f03
+
+00:0f30 call_00_0f30
+
+00:0f61 call_00_0f61
+;; 00:0f80 Call call_init_samples at 1b:7393
+;; 00:0f8c Call call_set_lsdj_palette at 01:47fc
+;; 00:0f8f Call call_clear_oam_vram at 01:7801
+;; 00:0fb5 Call 01:452f
+;; 00:0fc1 Call 1e:7a0c
+;; 00:0fd7 Call call_cart_test at 01:4152
+;; 00:100d Call call_reset_external_ram at 01:429c
+;; 00:1010 Call 01:45bb
+;; 00:101c Call 1c:4057
+;; 00:102e Call 01:44f8
+;; 00:1040 Call 1c:47b1
+;; 00:104e Call 01:76a3 then set bank to 00
+
+;; 00:107b Call 07:6a6a
+;; 00:10f2 Call 02:6d1b
+;; 00:110e Call 01:4863
+;; 00:115f Call 01:48cf
+;; 00:1186 Call 1f:49d5
+;; 00:11c1 Call 02:7b04
+;; 00:1234 Call 04:4582
+;; 00:125d Call 05:4517
+;; 00:1286 Call 05:4517
+;; 00:12be Call 1d:4f32
+
+00:13d9 call_00_13d9
+
+00:1466 .data:0008
+
+00:146e call_clear_bg_map_attr_data
+;; 00:146e Clear memory reserved for background map attribute data.
+;; 00:146e
+;; 00:146e Exit conditions:
+;; 00:146e   Memory will be cleared from 0xd800 through 0xd968.
+;; 00:146e
+;; 00:146e Registers used: AF, DE, HL
+;; 00:1476 0xd800 is BG_MAP_ATTR_CHUNK_0_DATA_START
+
+00:1480 _main
+00:1492 .jump_get_sound_en_dmg
+00:149d .jump_dmg_sound_off
+00:149e .jump_dmg_sound_on
+00:14a5 .jump_get_sound_en_cgb
+00:14a9 .jump_disable_sound
+
+;; 00:14cb Call 01:6ea5
+;; 00:14d9 Call 1c:40f2
+;; 00:150a Call 1d:5d43
+;; 00:1559 Call 06:50e8
+;; 00:157e Call 01:4b54
+;; 00:158f Call 01:4c08
+;; 00:1592 Call 01:7221
+;; 00:15a8 Call 01:7239
+
+00:1616 call_00_1616
+
+00:160d call_handle_exception
+;; 00:160d This subroutine should be called whenever an assertion fails.
+;; 00:160d This will lead to showing the crash screen.
+;; 00:160d If an exception is already being handled, this does nothing.
+;; 00:160d
+;; 00:160d TODO: document more after analyzing rst_trigger_crash.
+;; 00:160d -
+;; 00:160d Does nothing, used for breakpoints
+;; 00:1615 calls rst_trigger_crash at 0x38
+
+00:1616 call_trigger_breakpoint
+;; 00:1616 Does nothing.
+;; 00:1616 "ld b, b" can be used for debugger breakpoints.
+
+00:1699 call_read_external_ram
+;; 00:1699 Reads a byte from external RAM.
+;; 00:1699
+;; 00:1699 Args: bank, address (word)
+;; 00:1699
+;; 00:1699 Exit conditions:
+;; 00:1699   E = the byte at the address
+;; 00:1699   The external RAM register (0x0000) will be set to 0
+;; 00:1699
+;; 00:1699 Registers used: A, DE, HL
+;; 00:169c External RAM bank cannot be greater than or equal to 0x10
+;; 00:16a5 Set external RAM bank number
+;; 00:16a8 Enable external RAM
+;; 00:16ad Read byte
+;; 00:16b0 Disable external RAM
+
+00:16c9 call_00_16c9
+
+00:1741 call_write_external_ram
+;; 00:1741 Write a byte to external RAM.
+;; 00:1741
+;; 00:1741 Args: bank, address (word), byte
+;; 00:1741
+;; 00:1741 Exit conditions:
+;; 00:1741   The external RAM register (0x0000) will be set to 0
+;; 00:1741
+;; 00:1741 Registers used: A, DE, HL
+;; 00:174a Set the external RAM bank number
+;; 00:174d Enable external RAM
+;; 00:1752 Write byte
+;; 00:1754 Disable external RAM
+
+00:1759 call_00_1759
+
+00:1779 call_00_1779
+
+00:1860 call_00_1860
+
+00:1984 call_jump_hl
+;; 00:1984 Jump to HL.
+
+00:1985 call_banked_call
+;; 00:1985 Call a subroutine in another bank.
+;; 00:1985 Args: bank, address (word)
+;; 00:1985 Registers used: A, HL
+
+00:19a6 call_banked_call_set_bank
+;; 00:19a6 Call a subroutine in another bank, then set the bank.
+;; 00:19a6
+;; 00:19a6 Args: bank, address (word), new_bank
+;; 00:19a6
+;; 00:19a6 Exit conditions:
+;; 00:19a6   The bank register (0x2000) will be set to new_bank
+;; 00:19a6
+;; 00:19a6 Registers used: A, HL
+
+00:194b call_00_194b
+
+00:19d7 call_copy_bg_map_attr_line_2x
+;; 00:19d7 Copy 2 lines of background map attributes to an address.
+;; 00:19d7 Each line is 32 bytes, so 64 bytes in total will be copied.
+;; 00:19d7 There are only 20 visible attributes per line, so the last 12 bytes will be skipped.
+;; 00:19d7
+;; 00:19d7 Entry conditions:
+;; 00:19d7   HL = source_address
+;; 00:19d7   DE = target_address
+;; 00:19d7
+;; 00:19d7 Registers used: A, DE, HL
+;; 00:19d7 -
+;; 00:19d7 Copy first line
+;; 00:1a12 Skip invisible attributes on first line
+;; 00:1a16 Copy second line
+;; 00:1a51 Skip invisible attributes on second line
+
+00:1a56 call_copy_bg_map_attr_chunk
+;; 00:1a56 Copy the current background map attributes to VRAM.
+;; 00:1a56 This cycles between three 6-line chunks (thirds of the screen) each time it is called.
+;; 00:1a56
+;; 00:1a56 Entry conditions:
+;; 00:1a56   Background map attributes should be stored at 0xd800 through 0xd968
+;; 00:1a56
+;; 00:1a56 Registers: A, DE, HL
+;; 00:1a60 Copy background map chunk 0 starts here
+;; 00:1a60 Index is incremented to 1
+;; 00:1a61 0xd800 is BG_MAP_ATTR_CHUNK_0_DATA_START
+00:1a70 .jump_copy_bg_map_attr_chunk_1
+;; 00:1a70 Index is incremented to 2
+;; 00:1a71 0xd878 is BG_MAP_ATTR_CHUNK_1_DATA_START
+;; 00:1a7a Reached 0x9900, high byte of VRAM address should increment
+00:1a81 .jump_copy_bg_map_attr_chunk_2
+;; 00:1a81 Index is reset to 0
+;; 00:1a83 0xd8f0 is BG_MAP_ATTR_CHUNK_2_DATA_START
+;; 00:1a8f Reached 0x9a00, high byte of VRAM address should increment
+
+00:1dea .data:0002
+
+00:1f05 call_00_1f05
+
+00:1f2f call_00_1f2f
+
+00:1f8a call_00_1f8a
+
+;; 00:1fff Call 02:5d38
+;; 00:207c Call 02:7b04
+
+;; 00:20a0 Call 02:7b04
+;; 00:20a3 Call 02:7b04
+
+00:2084 .data:0005
+
+00:21b7 call_rom_test
+;; 00:21b7 Check the ROM image for integrity by recalculating the global checksum.
+;; 00:21b7
+;; 00:21b7 Exit conditions:
+;; 00:21b7   Current bank (0x2000) = 0x3f
+;; 00:21b7   E = success
+;; 00:21b7
+;; 00:21b7 Registers used: A, DE, HL
+
+00:2295 call_sum_bank
+;; 00:2295 Get the sum of the ROM in the currently selected bank.
+;; 00:2295 Entry conditions: 0x2000 = bank
+;; 00:2295 Exit conditions: DE = sum
+;; 00:2295 Registers used: A, DE, HL
+
+00:22a6 call_sram_test_address
+;; 00:22a6 Test the integrity of a single SRAM address.
+;; 00:22a6 Exit conditions: E = success
+;; 00:22a6 Registers used: A, E, HL
+;; 00:22a6 -
+;; 00:22a6 TODO: dig deeper into this function
+
+;; 00:22ca Call 02:6fa0
+;; 00:22da Call 01:6ea5
+
+;; 00:2361 Call 02:4e02
+
+;; 00:248f Call 02:6f8d
+;; 00:24ae Call 1b:5b96
+;; 00:24da Call 02:541e
+
+;; 00:2567 Call 1c:63b5
+
+;; 00:2676 Call 01:50dc
+;; 00:269f Call 05:4000
+;; 00:26b4 Call 1e:4000
+;; 00:2730 Call 04:48f4
+;; 00:273f Call 1d:4124
+;; 00:274e Call 06:5d91
+;; 00:275d Call 07:449f
+;; 00:276c Call 05:48bd
+;; 00:277b Call 03:4dc9
+;; 00:278d Call 06:4d70
+;; 00:279c Call 1b:5c33
+;; 00:27ab Call 1d:632f
+;; 00:27bd Call 06:425c
+;; 00:27cc Call 1c:58ad
+;; 00:27db Call 1b:48ff
+
+;; 00:283a Call 1f:62aa
+;; 00:2849 Call 1d:435f
+;; 00:2858 Call 05:4ade
+;; 00:2867 Call 06:5f28
+;; 00:2876 Call 07:452e
+;; 00:28a7 Call 04:7908
+;; 00:28aa Call 04:7af4
+;; 00:28be Call 04:7b6b
+
+;; 00:29bc Call 02:5ef3
+;; 00:29dd Call 1f:7645
+;; 00:2a6e Call 02:5ef3
+;; 00:2aca Call 02:5ef3
+;; 00:2ad8 Call 1f:7645
+;; 00:2b8a Call 02:5ef3
+;; 00:2c04 Call 02:5ef3
+;; 00:2c1b Call 1f:7645
+
+;; 00:2caa Call 04:558d
+;; 00:2cba Call 1d:4585
+;; 00:2cca Call 06:606c
+;; 00:2cda Call 07:49b3
+;; 00:2cea Call 05:4de6
+;; 00:2cfa Call 03:5470
+;; 00:2d0a Call 1b:506f
+;; 00:2d1a Call 06:551d
+;; 00:2d2a Call 1b:5f2f
+;; 00:2d3a Call 1d:6f27
+;; 00:2d4d Call 06:43d7
+;; 00:2d5d Call 1c:5abc
+;; 00:2d6d Call 1b:4a19
+
+00:2d74 call_00_2d74
+
+00:2dc5 .data:0003
+
+00:2e14 channel_labels
+00:2e14 .text:0010
+
+00:2e74 .data:000c
+
+00:2f26 .data:000f
+
+00:2f63 call_00_2f63
+
+00:2f96 call_00_2f96
+
+00:3000 call_write_bg_map_attr_data
+;; 00:3000 Write background map attribute data to memory.
+;; 00:3000 If the target address is not in the memory range used for background map attributes, throws an exception.
+;; 00:3000 This range starts at BG_MAP_ATTR_CHUNK_0_DATA_START.
+;; 00:3000
+;; 00:3000 Args: source_address
+;; 00:3000
+;; 00:3000 Entry conditions:
+;; 00:3000   *(BG_MAP_ATTR_TARGET (word)) = target_address (must be between 0xd800 through 0xd968)
+;; 00:3000
+;; 00:3000 Exit conditions:
+;; 00:3000   The data at the source address will be written to the target address up until the 0x00 byte is encountered.
+;; 00:3000
+;; 00:3000 Registers used: A, DE, HL
+;; 00:300e TODO: determine what address 0xc577 is
+;; 00:3014 TODO: determine what address 0xff8c is
+00:301d .jump_write_bg_attr_data_loop
+00:3028 .jump_write_bg_attr_data
+00:303f .jump_write_bg_attr_data_continue
+00:3042 .jump_write_bg_attr_data_end
+
+00:3218 font_copy_uncompressed
+;; 00:3218 gbdk 2.95 libc/gb/font.ms:font_copy_uncompressed
+;; 00:3218
+;; 00:3218 Copy uncompressed 16 byte tiles.
+;; 00:3218 Uses the current fg_colour and bg_colour fields.
+;; 00:3218
+;; 00:3218 Entry conditions:
+;; 00:3218   BC = copy from address
+;; 00:3218   HL = copy to address (must be aligned to UWORD boundary)
+;; 00:3218   DE = count (cells * 8)
+;; 00:3218
+;; 00:3218 Registers used: A, BC, DE, HL
+00:3223 .font_copy_uncompressed_4
+00:3228 .font_copy_uncompressed_1
+00:3231 .font_copy_uncompressed_1_b
+00:3245 .font_copy_uncompressed_2
+
+00:324e font_load
+;; 00:324e gbdk 2.95 libc/gb/font.ms:font_load
+;; 00:324e Load a font.
+;; 00:324e Entry conditions: HL = font to load
+;; 00:324e Registers used: A, B, DE, HL
+00:3257 .font_load_find_slot
+00:3269 .font_load_found
+00:328d .font_load_exit
+
+00:3296 font_copy_current
+;; 00:3296 gbdk 2.95 libc/gb/font.ms:font_copy_current (with modifications)
+;; 00:3296 Copy the tiles from the current font into VRAM.
+;; 00:3296 Registers used: A, BC, DE, HL
+;; 00:3296 See: font_copy_uncompressed
+00:32c2 .font_copy_current_copy
+;; 00:32d8 Compressed fonts are not supported, jump straight to font_copy_uncompressed
+
+00:32db font_set
+;; 00:32db gbdk 2.95 libc/gb/font.ms:font_set
+;; 00:32db Set the current font.
+;; 00:32db Entry conditions: HL = font
+;; 00:32db Registers used: A, HL
+
+00:32e8 _font_load
+;; 00:32e8 gbdk 2.95 libc/gb/font.ms:_font_load
+;; 00:32e8 Load a font.
+;; 00:32e8 Args: font (word)
+;; 00:32e8 See: font_load
+
+00:32f6 _font_set
+;; 00:32f6 gbdk 2.95 libc/gb/font.ms:_font_set
+;; 00:32f6 Set the current font.
+;; 00:32f6 Args: font (word)
+;; 00:32f6 See: font_set
+
+00:3305 _font_init
+;; 00:3305 gbdk 2.95 libc/gb/font.ms:_font_init (with modifications)
+;; 00:3305 Initialize the font system.
+;; 00:3305 Registers used: A, HL
+00:3314 .font_init_1
+;; 00:3322 Skip calling .cls
+
+00:3341 tmode
+;; 00:3341 gbdk 2.95 libc/gb/font.ms:.tmode (with modifications)
+;; 00:3341 Enter text mode.
+;; 00:3341 Registers used: A
+;; 00:3348 Skip removing interrupts since they're unused
+00:334b .tmode_1
+
+00:3358 tmode_out
+;; 00:3358 gbdk 2.95 libc/gb/font.ms:.tmode_out
+
+00:3365 _rand_randw
+;; 00:3365 gbdk 2.95 libc/gb/rand.s:_rand/_randw
+;; 00:3365 Generate a random number.
+;; 00:3365 Result: DE
+;; 00:3365 Registers used: A, DE, HL
+
+00:3390 _cpu_fast
+;; 00:3390 gbdk 2.95 libc/gb/cgb.s:_cpu_fast
+;; 00:3390 Enable speed switch (CGB only).
+;; 00:3390 Registers used: AF, HL
+
+00:33ab send_byte
+;; 00:33ab gbdk 2.95 libc/gb/serial.s:.send_byte/_send_byte
+;; 00:33ab Send the byte in IO_OUT to the serial port.
+;; 00:33ab Registers used: A
+
+00:33be receive_byte
+;; 00:33be gbdk 2.95 libc/gb/serial.s:.receive_byte/_receive_byte
+;; 00:33be Receive byte from the serial port in IO_IN.
+;; 00:33be Registers used: A
+
+00:33cf set_mode
+;; 00:33cf gbdk 2.95 libc/gb/crt0.s:.set_mode
+;; 00:33cf Sets the current mode. Will jump to the initialization routine.
+;; 00:33cf Entry conditions: L = mode
+;; 00:33cf Registers used: A, BC, HL
+
+00:33df display_off
+;; 00:33df gbdk 2.95 libc/gb/crt0.s:.display_off
+;; 00:33df Turns off the screen.
+;; 00:33df Registers used: A
+00:33e3 .display_off_1
+00:33e9 .display_off_2
+
+00:33f6 serial_io
+;; 00:33f6 gbdk 2.95 libc/gb/crt0.s:.serial_io (with modifications)
+;; 00:33f6 Serial interrupt handler.
+00:3408 .serial_io_10
+00:3416 .serial_io_11
+00:3418 .serial_io_12
+;; 00:3418 Skip using external clock and replying with idle byte
+00:341b .serial_io_99
+;; 00:341f TODO: document return handler at 00:167f
+
+00:3422 _mode
+;; 00:3422 gbdk 2.95 libc/gb/crt0.s:_mode
+;; 00:3422 Sets the current mode.
+;; 00:3422 Args: mode
+;; 00:3427 Use jr instead of call to jump directly back
+
+00:3429 _get_mode
+;; 00:3429 gbdk 2.95 libc/gb/crt0.s:_get_mode
+;; 00:3429 Gets the current mode.
+;; 00:3429 Result: E
+;; 00:3429 Registers used: E, HL
+
+00:342e _enable_interrupts
+;; 00:342e gbdk 2.95 libc/gb/crt0.s:_enable_interrupts
+
+00:3430 _disable_interrupts
+;; 00:3430 gbdk 2.95 libc/gb/crt0.s:_disable_interrupts
+
+00:3432 _reset
+;; 00:3432 gbdk 2.95 libc/gb/crt0.s:.reset/_reset
+
+00:34ea .data:0011
+
+00:3616 call_00_3616
+
+00:364d _modslong_divslong_mulslong
+;; 00:364d gbdk 2.95 libc/asm/gbz80/div.s:__modslong/__divslong/__mulsong
+;; 00:364d Unsupported (?)
+
+00:364e _divschar
+;; 00:364e gbdk 2.95 libc/asm/gbz80/div.s:__divschar
+;; 00:364e Divide chars.
+;; 00:364e Args: dividend, divisor
+;; 00:364e Result: E
+;; 00:364e See: div8_mod8
+
+00:365a _modschar
+;; 00:365a gbdk 2.95 libc/asm/gbz80/div.s:__modschar
+;; 00:365a Perform modulus on chars.
+;; 00:365a Args: dividend, divisor
+;; 00:365a Result: E
+;; 00:365a See: div8_mod8
+
+00:3665 _divsint
+;; 00:3665 gbdk 2.95 libc/asm/gbz80/div.s:__divsint
+;; 00:3665 Divide ints.
+;; 00:3665 Args: dividend (word), divisor (word)
+;; 00:3665 Result: DE
+;; 00:3665 See: div16_mod16
+
+00:3676 _modsint
+;; 00:3676 gbdk 2.95 libc/asm/gbz80/div.s:__modsint
+;; 00:3676 Perform modulus on ints.
+;; 00:3676 Args: dividend (word), divisor (word)
+;; 00:3676 Result: DE
+;; 00:3676 See: div16_mod16
+
+00:3685 _divuchar
+;; 00:3685 gbdk 2.95 libc/asm/gbz80/div.s:__divuchar
+;; 00:3685 Divide unsigned chars.
+;; 00:3685 Args: dividend, divisor
+;; 00:3685 Result: E
+;; 00:3685 See: divu8_modu8
+
+00:3691 _moduchar
+;; 00:3691 gbdk 2.95 libc/asm/gbz80/div.s:__moduchar
+;; 00:3691 Perform modulus on unsigned chars.
+;; 00:3691 Args: dividend, divisor
+;; 00:3691 Result: E
+;; 00:3691 See: divu8_modu8
+
+00:369c _divuint
+;; 00:369c gbdk 2.95 libc/asm/gbz80/div.s:__divuint
+;; 00:369c Divide unsigned ints.
+;; 00:369c Args: dividend (word), divisor (word)
+;; 00:369c Result: DE
+;; 00:369c See: divu16_modu16
+
+00:36ad _moduint
+;; 00:36ad gbdk 2.95 libc/asm/gbz80/div.s:__moduint
+;; 00:36ad Perform modulus on unsigned ints.
+;; 00:36ad Args: dividend (word), divisor (word)
+;; 00:36ad Result: DE
+;; 00:36ad See: divu16_modu16
+
+00:36bc div8_mod8
+;; 00:36bc gbdk 2.95 libc/asm/gbz80/div.s:.div8/.mod8
+;; 00:36bc
+;; 00:36bc 8-bit division.
+;; 00:36bc
+;; 00:36bc Entry conditions:
+;; 00:36bc   C = dividend
+;; 00:36bc   E = divisor
+;; 00:36bc
+;; 00:36bc Exit conditions:
+;; 00:36bc   C = quotient
+;; 00:36bc   E = remainder
+;; 00:36bc   If divisor is non-zero, carry=0
+;; 00:36bc   If divisor is 0, carry=1 and both quotient and remainder are 0
+;; 00:36bc
+;; 00:36bc Registers used: AF, BC, DE, HL
+
+00:36c4 div16_mod16
+;; 00:36c4 gbdk 2.95 libc/asm/gbz80/div.s:.div16/.mod16
+;; 00:36c4
+;; 00:36c4 16-bit division.
+;; 00:36c4
+;; 00:36c4 Entry conditions:
+;; 00:36c4   BC = dividend
+;; 00:36c4   DE = divisor
+;; 00:36c4
+;; 00:36c4 Exit conditions:
+;; 00:36c4   BC = quotient
+;; 00:36c4   DE = remainder
+;; 00:36c4
+;; 00:36c4 See: div8_mod8
+00:36d2 .chkde
+00:36dc .dodiv
+00:36e4 .dodiv_1
+00:36ef .dorem
+
+00:36fa divu8_modu8
+;; 00:36fa gbdk 2.95 libc/asm/gbz80/div.s:.divu8/.modu8
+;; 00:36fa 8-bit unsigned division.
+;; 00:36fa See: div8
+
+00:36fd divu16_modu16
+;; 00:36fd gbdk 2.95 libc/asm/gbz80/div.s:.divu16/.modu16 (with modifications)
+;; 00:36fd 16-bit unsigned division.
+;; 00:36fd See: div16
+00:3708 .divide
+;; 00:370e Instead of looping, as in gbdk 2.95, call a function 16 times
+;; 00:373e libc/asm/gbz80/div.s:.nodrop (without loop counter)
+
+00:3748 call_divide_loop
+;; 00:3748 gbdk 2.95 libc/asm/gbz80/div.s:.divide loop separated into its own function
+00:375c .drop
+
+00:375f _strcpy
+;; 00:375f gbdk 2.95 libc/asm/gbz80/asm_string.s:_strcpy
+;; 00:375f char *strcpy(char *dest, const char *source)
+;; 00:375f Result: DE = dest
+00:3769 .strcpy_1
+
+00:3771 _memcpy
+;; 00:3771 gbdk 2.95 libc/asm/gbz80/asm_string.s:_memcpy
+;; 00:3771 void *memcpy(void *dest, const void *source, int count)
+;; 00:3771 Result: DE = dest
+00:3785 .memcpy_1
+00:3788 .memcpy_2
+
+00:3791 _strcmp
+;; 00:3791 gbdk 2.95 libc/asm/gbz80/asm_string.s:_strcmp
+;; 00:3791 int strcmp(const char *s1, const char *s2)
+;; 00:3791 Result: DE = 0 if equal, 1 if s1 is greater than s2, -1 if s1 is less than s2
+00:379c .strcmp_2
+00:37a3 .strcmp_1
+00:37a7 .strcmp_3
+00:37ac .strcmp_4
+00:37b4 .strcmp_5
+
+00:37b5 call_mem_fill
+;; 00:37b5 Write a repeating byte to memory.
+;; 00:37b5 Entry conditions: HL = address, B = byte, DE = size
+;; 00:37b5 Registers used: A, B, DE, HL
+
+00:37bd _call_mem_fill
+;; 00:37bd Write a repeating byte to memory.
+;; 00:37bd Args: address (word), byte, size (word)
+;; 00:37bd Registers used: A, HL
+
+00:37d0 initrand
+;; 00:37d0 gbdk 2.95 libc/gb/rand.s:_initrand
+;; 00:37d0 Set the random seed.
+;; 00:37d0 Registers used: A, HL
+
+00:37db _mulschar_muluchar
+;; 00:37db gbdk 2.95 libc/asm/gbz80/mul.s:__mulschar/__muluchar
+;; 00:37db Multiply chars.
+;; 00:37db Args: multiplicand, multiplier
+;; 00:37db Result: DE
+;; 00:37db See: mul8_mulu8
+
+00:37e7 _mulsint_muluint
+;; 00:37e7 gbdk 2.95 libc/asm/gbz80/mul.s:__mulsint/__muluint
+;; 00:37e7 Multiply ints.
+;; 00:37e7 Args: multiplicand (word), multiplier (word)
+;; 00:37e7 Result: DE
+;; 00:37e7 See: mul16_mulu16
+
+00:37f8 mul8_mulu8
+;; 00:37f8 gbdk 2.95 libc/asm/gbz80/mul.s:.mul8/.mulu8
+;; 00:37f8
+;; 00:37f8 8-bit multiplication.
+;; 00:37f8
+;; 00:37f8 Entry conditions:
+;; 00:37f8   C = dividend
+;; 00:37f8   E = divisor
+;; 00:37f8
+;; 00:37f8 Exit conditions:
+;; 00:37f8   DE = product
+;; 00:37f8
+;; 00:37f8 Registers used: AF, BC, DE, HL
+
+00:37fb mul16_mulu16
+;; 00:37fb gbdk 2.95 libc/asm/gbz80/mul.s:.mul16/.mulu16
+;; 00:37fb
+;; 00:37fb 16-bit multiplication.
+;; 00:37fb
+;; 00:37fb Entry conditions:
+;; 00:37fb   BC = dividend
+;; 00:37fb   DE = divisor
+;; 00:37fb
+;; 00:37fb Exit conditions:
+;; 00:37fb   DE = product (least significant word)
+;; 00:37fb
+;; 00:37fb Registers used: AF, BC, DE, HL
+00:3800 .mlp
+00:3807 .mlp1
+00:3810 .mend
+
+00:3811 _set_bkg_palette
+;; 00:3811 gbdk 2.95 libc/gb/cgb.s:_set_bkg_palette
+;; 00:3811
+;; 00:3811 Set background palettes.
+;; 00:3811
+;; 00:3811 Args:
+;; 00:3811   first_palette
+;; 00:3811   nb_palettes (count)
+;; 00:3811   rgb_data (address)
+;; 00:3811
+;; 00:3811 Registers used: AF, HL
+00:3827 .set_bkg_palette_1
+
+00:383c vbl
+;; 00:383c gbdk 2.95 libc/gb/drawing.s:.vbl
+
+00:3847 lcd
+;; 00:3847 gbdk 2.95 libc/gb/drawing.s:.lcd
+
+00:3854 jpad
+;; 00:3854 gbdk 2.95 libc/gb/pad.s:.jpad (with modifications)
+;; 00:3854
+;; 00:3854 Get keypad button status.
+;; 00:3854
+;; 00:3854 Exit conditions:
+;; 00:3854   E = status (buttons held)
+;; 00:3854       0x80: Start
+;; 00:3854       0x40: Select
+;; 00:3854       0x20: B
+;; 00:3854       0x10: A
+;; 00:3854       0x08: Down
+;; 00:3854       0x04: Up
+;; 00:3854       0x02: Left
+;; 00:3854       0x01: Right
+;; 00:3854
+;; 00:3854 Registers used: A, E
+;; 00:3880 Use E for return status instead of A like in gbdk
+;; 00:3880 The _joypad subroutine handles this in gbdk
+;; 00:3880 This is a little faster
+
+00:3882 delay
+;; 00:3882 gbdk 2.95 libc/gb/delay.s:.delay
+;; 00:3882
+;; 00:3882 Wait for a given period of time.
+;; 00:3882
+;; 00:3882 Entry conditions:
+;; 00:3882   DE = milliseconds (1 to 65536, 0 = 65536)
+;; 00:3882
+;; 00:3882 Registers used: AF, DE
+00:3888 .ldlp
+00:388a .delay_1
+00:388c .delay_2
+00:388e .delay_3
+00:3890 .delay_4
+00:3892 .delay_5
+00:389a .delay_6
+00:389c .delay_7
+00:389e .delay_8
+00:389f dly
+00:38a5 .dlp
+00:38a7 .dly_1
+00:38a9 .dly_2
+00:38ab .dly_3
+00:38ad .dly_4
+00:38af .dly_5
+00:38b6 .dly_6
+00:38b8 .dly_7
+00:38ba .dly_8
+
+00:38bc _delay
+;; 00:38bc gbdk 2.95 libc/gb/delay.s:_delay
+;; 00:38bc Wait for a given period of time.
+;; 00:38bc Args: milliseconds (word)
+;; 00:38bc See: delay
+
+00:38c5 init_vram
+;; 00:38c5 gbdk 2.95 libc/gb/init_tt.s:.init_vram
+;; 00:38c5
+;; 00:38c5 Fill part of the VRAM with a value.
+;; 00:38c5
+;; 00:38c5 Entry conditions:
+;; 00:38c5   B = value
+;; 00:38c5   DE = size
+;; 00:38c5   HL = address
+;; 00:38c5
+;; 00:38c5 Registers used: A, B, DE, HL
+
+00:38d3 init_wtt
+;; 00:38d3 gbdk 2.95 libc/gb/init_tt.s:.init_wtt
+;; 00:38d3 Fill window tile table with a value.
+;; 00:38d3 Entry conditions: B = value
+;; 00:38d3 Registers used: A, B, DE, HL
+00:38de .init_wtt_1
+
+00:38e3 init_btt
+;; 00:38e3 gbdk 2.95 libc/gb/init_tt.s:.init_btt
+;; 00:38e3 Fill background tile table with a value.
+;; 00:38e3 See: init_wtt
+00:38ee .init_btt_1
+
+00:38f1 init_tt
+;; 00:38f1 gbdk 2.95 libc/gb/init_tt.s:.init_tt
+;; 00:38f1 Fill a tile table with a value.
+;; 00:38f1 See: init_wtt, init_btt
+
+00:38f7 copy_vram
+;; 00:38f7 gbdk 2.95 libc/gb/cpy_data.s:.copy_vram
+;; 00:38f7
+;; 00:38f7 Copy part of VRAM.
+;; 00:38f7
+;; 00:38f7 Entry conditions:
+;; 00:38f7   BC = copy from address
+;; 00:38f7   HL = copy to address
+;; 00:38f7   DE = count
+
+00:3906 _set_bkg_tiles
+;; 00:3906 gbdk 2.95 libc/gb/set_bk_t.s:_set_bkg_tiles
+;; 00:3906 Set background tiles.
+;; 00:3906 Registers used: A, DE, HL
+
+00:391a set_xy_wtt
+;; 00:391a gbdk 2.95 libc/gb/set_xy_t.s:.set_xy_wtt
+;; 00:391a Store window tile table.
+;; 00:391a
+;; 00:391a Entry conditions:
+;; 00:391a   BC = store at address
+;; 00:391a   D = X
+;; 00:391a   E = Y
+;; 00:391a   H = width
+;; 00:391a   L = height
+;; 00:391a
+;; 00:391a Registers used: A, BC, DE, HL
+00:3926 .set_xy_wtt_1
+
+00:392b set_xy_btt
+;; 00:392b gbdk 2.95 libc/gb/set_xy_t.s:.set_xy_btt
+;; 00:392b Store background tile table.
+;; 00:392b See: set_xy_wtt
+00:3937 .set_xy_btt_1
+;; 00:3937 Skip jump to the next instruction
+
+00:393a set_xy_tt
+;; 00:393a gbdk 2.95 libc/gb/set_xy_t.s:.set_xy_tt (with modifications)
+;; 00:393a Store tile table.
+;; 00:393a See: set_xy_wtt, set_xy_btt
+00:3942 .set_xy_tt_1
+00:3946 .set_xy_tt_2
+00:394e .set_xy_tt_3
+;; 00:394e Interrupts are briefly enabled unlike gbdk
+;; 00:394e This makes LSDj palette changes more reliable
+00:3974 .set_xy_tt_4
+
+00:3975 call_set_default_ram_values
+;; 00:3975 Set RAM addresses used to their default values.
+;; 00:3975 Registers used: A, DE, HL
+;; 00:3b0d Set the default screen to the project screen
+
+00:3ec4 .bank_00_padding
+00:3ec4 .data:013c
+
+01:4000 _set_sprite_palette
+;; 01:4000 gbdk 2.95 libc/gb/cgb.s:_set_sprite_palette
+;; 01:4000 See: _set_bkg_palette
+01:4016 .set_sprite_palette_1
+
+01:402b call_sram_random_test
+;; 01:402b Test SRAM by generating random numbers.
+;; 01:402b Exit conditions: E = success
+;; 01:402b Registers used: A, DE, HL
+;; 01:402b -
+;; 01:402b TODO: dig deeper into this function.
+; Avoid labelling values as functions
+;; 01:4051:r_op $4000
+;; 01:40b5:r_op $4000
+
+01:4115 .data:0010
+
+01:4125 call_sram_test
+;; 01:4125 Test SRAM integrity.
+;; 01:4125 Exit conditions: E = success
+;; 01:4125 Registers used: A, E, HL
+;; 01:4125 -
+;; 01:4125 TODO: dig deeper into this function.
+;; 01:4133:r_op $4000
+
+01:4152 call_cart_test
+;; 01:4152 Run the cart test.
+;; 01:4152 Prints messages to the screen, and performs ROM/SRAM tests.
+;; 01:4152 Registers used: A, HL, DE
+;; 01:4175 Call call_rom_test at 00:21b7
+01:4195 .jump_rom_test_fail
+01:41c0 .jump_rom_test_fail_halt
+01:41c3 .jump_sram_test
+01:41f2 .jump_sram_test_fail
+01:421d .jump_sram_test_fail_halt
+01:4220 .jump_cart_test_end
+
+01:429c call_reset_external_ram
+;; 01:429c Reset external RAM values to their defaults.
+;; 01:429c Registers used: A, DE, HL
+;; 01:42a0 Enable reading/writing cart RAM
+;; 01:42a5 Select RAM bank 0
+; Avoid labelling values as functions
+;; 01:42a5:r_op $4000
+;; 01:42aa Clear bank 0
+;; 01:42ad Call 07:66f9
+;; 01:43a8 Select RAM bank 1
+;; 01:43a8:r_op $4000
+;; 01:43be Clear bank 1
+;; 01:43e9 Select RAM bank 3
+;; 01:43e9:r_op $4000
+;; 01:43ee Clear bank 3
+;; 01:4402 Select RAM bank 2
+;; 01:4402:r_op $4000
+;; 01:4407 Clear bank 2
+;; 01:440a Enable reading/writing cart RAM and disable interrupts again
+;; 01:4410 Select RAM bank 1
+;; 01:4410:r_op $4000
+;; 01:4433 Set current palette to 0, was likely previously part of cart RAM
+;; 01:44a5 Select RAM bank 3
+;; 01:44a5:r_op $4000
+;; 01:44ee Re-enable interrupts
+;; 01:44ef Disable reading/writing cart RAM
+;; 01:44f4 Cleanup
+
+01:4222 cart_test_title_string
+01:4222 .text:000f
+01:4231 cart_test_rom_string
+01:4231 .text:0007
+01:4238 cart_test_rom_ok_string
+01:4238 .text:0004
+01:423c cart_test_rom_fail_string
+01:423c .text:0006
+01:4242 cart_test_rom_error_1_string
+01:4242 .text:0012
+01:4254 cart_test_rom_error_2_string
+01:4254 .text:0010
+01:4264 cart_test_sram_string
+01:4264 .text:0008
+01:426c cart_test_sram_ok_string
+01:426c .text:0004
+01:4270 cart_test_sram_fail_string
+01:4270 .text:0006
+01:4276 cart_test_sram_error_1_string
+01:4276 .text:0012
+01:4288 cart_test_sram_error_2_string
+01:4288 .text:0014
+
+01:44f8 call_01_44f8
+
+01:452f call_01_452f
+
+01:45bb call_01_45bb
+
+01:472b .data:0005
+
+01:47fc call_set_lsdj_palette
+;; 01:47fc Set the background/object palettes to the colors in the currently selected LSDj palette.
+;; 01:47fc
+;; 01:47fc Entry conditions:
+;; 01:47fc   CURRENT_PALETTE_NUM (0xc53c) should be set
+;; 01:47fc
+;; 01:47fc Exit conditions:
+;; 01:47fc   Background palette and object palette will be set
+;; 01:47fc   LCDC will be enabled
+;; 01:47fc
+;; 01:47fc Registers used: AF, HL
+;; 01:4806 Disable LCDC
+;; 01:480c Set background colors to values starting at (CURRENT_PALETTE_NUM) * 0x28 + 0x5380
+;; 01:480c Each palette is 0x28 long and palettes start at 0x5380
+;; 01:4834 Set object palettes
+;; 01:4842 Cleanup
+
+01:484d .jump_handle_dmg
+;; 01:484d Set normal (11 10 01 00) or inverted (00 01 10 11) palette
+01:485a .jump_set_normal_dmg_palette
+01:485c .jump_set_dmg_palette
+01:4861 .jump_handle_dmg_end
+
+01:48cf call_01_48cf
+
+01:493b call_01_493b
+
+01:49ab call_01_49ab
+
+;; 01:4aad Call 01:6f8b
+
+;; 01:4c02 Does nothing, used for breakpoints
+;; 01:4c06 Does nothing, used for breakpoints
+
+01:4c08 call_01_4c08
+
+01:4a1b call_01_4a1b
+
+01:4ac1 call_01_4ac1
+
+01:4b01 call_01_4b01
+
+01:4b54 call_01_4b54
+
+01:4cf4 call_01_4cf4
+
+01:4d6e pitch_shift_type_strings
+01:4d6e .text:0005
+01:4d73 .text:0005
+01:4d78 .text:0005
+01:4d7d .text:0005
+
+01:4d82 call_01_4d82
+
+01:4da0 .data:0008
+
+01:4da8 call_01_4da8
+
+01:4fad call_01_4fad
+
+;; 01:4fec Call 1f:4a63
+
+;; 01:4e1a Call 1c:6272
+
+01:502c call_01_502c
+
+;; 01:50ca Call 03:4dc9
+
+01:5134 .jump_handle_phrase_screen
+01:513c .jump_handle_groove_screen
+01:5144 .jump_handle_chain_screen
+01:514c .jump_handle_song_screen
+01:5154 .jump_handle_table_screen
+01:515c .jump_handle_instrument_screen
+01:5164 .jump_handle_crash_screen
+01:5167 .jump_handle_synth_screen
+01:516f .jump_handle_project_screen
+01:5177 .jump_handle_wave_editor_screen
+01:517f .jump_handle_talk_screen
+01:5187 .jump_handle_word_screen
+01:518f .jump_handle_file_screen
+01:5197 .jump_handle_help_screen
+
+01:51d0 .data:01b0
+
+01:5380 palette_1_content
+01:5380 .data:0028
+01:53a8 palette_2_content
+01:53a8 .data:0028
+01:53d0 palette_3_content
+01:53d0 .data:0028
+01:53f8 palette_4_content
+01:53f8 .data:0028
+01:5420 palette_5_content
+01:5420 .data:0028
+01:5448 palette_6_content
+01:5448 .data:0028
+
+01:5470 .data:1248
+
+01:66b8 call_01_66b8
+
+;; 01:68a5 Call 1c:4057
+
+01:6915 command_help_strings
+01:6915 .text:0030
+01:6945 .text:000a
+01:694f .text:002d
+01:697c .text:0023
+01:699f .text:003b
+01:69da .text:0048
+01:6a22 .text:0027
+01:6a49 .text:0016
+01:6a5f .text:0088
+01:6ae7 .text:0020
+01:6b07 .text:0034
+01:6b3b .text:0016
+01:6b51 .text:0062
+01:6bb3 .text:004b
+01:6bfe .text:001b
+01:6c19 .text:0059
+01:6c72 .text:005c
+01:6cce .text:001b
+01:6ce9 .text:002d
+01:6d16 .text:0068
+01:6d7e .text:0032
+01:6db0 .text:0019
+01:6dc9 .text:0008
+01:6dd1 .text:0023
+01:6df4 .text:0048
+
+01:6e3c .data:0014
+01:6e50 .data:0014
+01:6e64 .data:0012
+
+01:6e76 screen_name_strings
+01:6e76 .text:002f
+
+01:6f8b call_01_6f8b
+
+01:6f95 out_of_memory_error_string
+01:6f95 .text:0031
+
+01:6fc6 call_01_6fc6
+
+01:6fd0 add_chain_error_string
+01:6fd0 .text:0014
+
+01:6fe4 call_01_6fe4
+
+01:6fee add_phrase_error_string
+01:6fee .text:0015
+
+01:7003 call_01_7003
+
+01:700d call_01_700d
+
+;; 01:712f Assumed to be jump table
+01:712f .data:0028
+
+01:7157 sweep_help_strings
+01:7157 .text:0049
+01:71a0 .text:002e
+01:71ce .text:0011
+01:71df .data:0001
+
+01:71e0 call_01_71e0
+
+01:7221 call_01_7221
+
+01:7239 call_01_7239
+
+01:7315 .data:0006
+
+01:731b jump_01_731b
+
+01:754b crash_help_strings
+01:754b .text:000c
+01:7557 .text:0011
+01:7568 .text:0010
+01:7578 .text:0012
+01:758a .text:0025
+
+01:76a3 call_01_76a3
+
+;; 01:770d Call 1e:7a0c
+;; 01:77a9 Call 07:5d3c
+;; 01:77c7 Call 1c:4a46
+;; 01:77d3 Call 1b:72f6
+;; 01:77ef Call 07:670b
+
+01:7801 call_clear_oam_vram
+;; 01:7801 Clear used portion of OAM and VRAM.
+;; 01:7801
+;; 01:7801 Exit conditions:
+;; 01:7801   OAM and the first 0x30 bytes of VRAM will be set to 0
+;; 01:7801   Interrupts will be enabled
+;; 01:7801
+;; 01:7801 Registers used: A, HL
+;; 01:7805 Set current OAM address to the start of OAM memory (0xfe00) +2
+01:780d .jump_set_oam_loop
+;; 01:780d Set value at SP to word at current OAM address
+;; 01:7814 Set value at SP+1 to OAM value (0)
+;; 01:781b Set value at SP+2 to 0x0000
+;; 01:7820 Check if the end of OAM memory (0xfebf) has been reached
+;; 01:782f Check if value at SP+1 is 0x0000 (always true) and exit loop
+01:783b .jump_set_oam
+;; 01:783b Write 0 to the current OAM address
+;; 01:784b Increment and loop
+01:7853 .jump_set_oam_end
+01:7856 .jump_init_set_vram_loop
+;; 01:7856 Set current VRAM address to the start of VRAM memory (0x8000)
+01:785e .jump_set_vram_loop
+;; 01:785e Set value at SP to word at current OAM address
+;; 01:7865 Set value at SP+1 to OAM value (0)
+;; 01:786c Set value at SP+2 to 0x0000
+;; 01:7871 Check if the last address has been reached (only sets first 0x30 addresses)
+;; 01:7880 Check if value at SP+1 is 0x0000 (always true) and exit loop
+01:788c .jump_set_vram
+;; 01:788c Write 0 to the current VRAM address
+;; 01:789c Increment and loop
+01:78a4 .jump_set_vram_end
+01:78a7 .jump_set_sprites
+;; 01:78a7 Set sprites at y pos 0x68 and x pos 0x90 through 0xa0 to sprites 0 through 2
+;; 01:78a7 Since the sprites are cleared, it's currently unknown what this does
+;; 01:790f Cleanup
+
+01:7914 call_clear_cart_ram
+;; 01:7914 This function clears cart RAM for the currently selected bank.
+;; 01:7914
+;; 01:7914 Entry conditions:
+;; 01:7914   Set the RAM bank (0x4000) to select which RAM bank is cleared.
+;; 01:7914
+;; 01:7914 Exit conditions:
+;; 01:7914   The RAM bank (0xa000 through 0xbfff) will be set to 0.
+;; 01:7914
+;; 01:7914 Registers used: A, HL
+01:7917 .jump_clear_ramp_loop
+
+01:7926 call_copy_bg_map_attr_palette_nums
+;; 01:7926 Copy background map attributes into VRAM.
+;; 01:7926
+;; 01:7926 Args:
+;; 01:7926   address = Should contain 360 bytes (20 columns and 18 lines).
+;; 01:7926             Only the top 2 bits of each byte will be read (4 colors).
+;; 01:7926
+;; 01:7926 Exit conditions:
+;; 01:7926   VRAM will be populated with the bytes at the address.
+;; 01:7926
+;; 01:7926 Registers used: A, DE, HL
+;; 01:7927 Set DE to address stored at SP
+;; 01:792c Set HL to the start of BG map attributes
+;; 01:792f Set B to the line counter (18 lines is 0x12 in hex)
+01:7931 .jump_loop
+;; 01:7931 Save line counter for later
+;; 01:7932 Set C to the row counter (20 attributes is 0x14 in hex)
+01:7934 .jump_row_loop
+;; 01:7934 Set B to the upper 2 bytes of the value at address DE
+01:793e .jump_wait_for_hblank
+;; 01:7944 Write the value to VRAM
+;; 01:7945 Retry if H-Blank period missed
+;; 01:794b Increment and loop
+;; 01:7950 Skip invisible attributes (final 12 attributes out of 32)
+;; 01:7954 Get line counter which was earlier pushed
+
+01:79b9 call_oam_vram_safe_write
+;; 01:79b9 Write a byte to OAM/VRAM when both are safe to use.
+;; 01:79b9 Args: address (word), byte
+;; 01:79b9 Registers used: A, E, HL
+01:79c0 .jump_wait_for_oam_vram
+;; 01:79c9 OAM used by system while writing or not safe to write to VRAM, try again
+
+01:79ce .data:0632
+
+02:42e5 .data:0200
+
+02:456d call_02_456d
+
+;; 02:469a Does nothing, used for breakpoints
+
+;; 02:46b3 Does nothing, used for breakpoints
+
+02:541e call_02_541e
+
+;; 02:64ef Call 07:5d3c
+
+02:6d6c .data:006c
+02:6dd8 .data:006c
+
+02:7770 call_02_7770
+
+02:7e69 .data:0010
+
+02:7f14 .data:00ec
+
+03:4015 instrument_strings
+03:4015 .text:0006
+03:401b .text:0005
+03:4020 .data:0004
+03:4024 .text:0005
+03:4029 .data:0004
+03:402d .text:0005
+03:4032 .data:0016
+03:4048 .text:0005
+03:404d .data:0004
+03:4051 .text:0007
+03:4058 .data:0002
+03:405a .text:0007
+03:4061 .data:0002
+03:4063 .text:0006
+03:4069 .data:0003
+03:406c .text:0006
+03:4072 .data:0003
+03:4075 .text:0008
+03:407d .data:0001
+03:407e .text:0009
+03:4087 .text:0009
+03:4090 .text:0009
+03:4099 .text:0006
+03:409f .data:001e
+03:40bd .text:0005
+03:40c2 .data:0004
+03:40c6 .text:0005
+03:40cb .data:0004
+03:40cf .text:0007
+03:40d6 .data:000b
+03:40e1 .text:0006
+03:40e7 .data:0003
+03:40ea .text:0008
+03:40f2 .data:0001
+03:40f3 .text:0009
+03:40fc .text:0009
+03:4105 .text:0006
+03:410b .data:0003
+03:410e .text:0005
+03:4113 .data:0004
+03:4117 .text:0006
+03:411d .data:0003
+03:4120 .text:0007
+03:4127 .data:0002
+03:4129 .text:0009
+03:4132 .text:0006
+03:4138 .data:0027
+03:415f .text:0005
+03:4164 .data:0004
+03:4168 .text:0005
+03:416d .data:0004
+03:4171 .text:0004
+03:4175 .data:000e
+03:4183 .text:0007
+03:418a .data:000b
+03:4195 .text:0006
+03:419b .data:0003
+03:419e .text:0009
+03:41a7 .text:0007
+03:41ae .data:000b
+03:41b9 .text:0004
+03:41bd .data:000e
+03:41cb .text:0005
+03:41d0 .data:000d
+03:41dd .text:0006
+03:41e3 .data:0003
+03:41e6 .text:0005
+03:41eb .data:0004
+03:41ef .text:0006
+03:41f5 .data:000c
+03:4201 .text:0005
+03:4206 .data:0004
+03:420a .text:0005
+03:420f .data:0004
+03:4213 .text:0005
+03:4218 .data:0016
+03:422e .text:0007
+03:4235 .data:0002
+03:4237 .text:0007
+03:423e .data:0002
+03:4240 .text:0006
+03:4246 .data:0003
+03:4249 .text:0007
+03:4250 .data:0002
+03:4252 .text:0009
+03:425b .data:0009
+03:4264 .text:0006
+03:426a .data:0003
+
+03:426d .data:00ca
+
+;; 03:447e Call 01:4d82
+
+03:4517 .data:0010
+
+;; 03:454a Call 1f:4a63
+
+;; 03:458c Call 1f:404d
+
+;; 03:4776 Call 05:4000
+;; 03:4783 Call 01:6781
+
+03:47aa instrument_screen_title_string
+03:47aa .text:0007
+
+03:47e4 .text:000f
+
+;; 03:494f Call 1f:4000
+
+;; 03:49b4 Call 1f:404d
+
+;; 03:49f1 Call 1f:404d
+
+;; 03:4a38 Call 1f:404d
+
+;; 03:4a7f Call 1f:404d
+
+03:4afa .data:0003
+
+03:4bbb .data:001b
+
+;; 03:4c85 Call 01:4cf4
+
+;; 03:4d3b Call 01:4cf4
+
+;; 03:4db0 Call 01:4cf4
+
+;; 03:4de2 Call 1f:77f2
+
+;; 03:4f0e Call 01:4622
+
+;; 03:4faa TODO: determine which subroutine this calls by default
+;; 03:4fc3 Call 1f:41f1
+;; 03:4fca Call 1f:46d4
+;; 03:4fd1 Call 1f:4354
+;; 03:4fd8 Call 1f:446b
+;; 03:4fe6 Call 1f:7645
+
+03:50df instrument_type_strings
+03:50df .text:0006
+03:50e5 .text:0006
+03:50eb .text:0006
+03:50f1 .text:0006
+
+;; 03:52a8 Call 01:50dc
+
+;; 03:534c Call 1f:4159
+
+;; 03:5382 Call 1f:4159
+
+;; 03:5424 Call 1f:4159
+
+;; 03:545e Call 1f:4159
+
+03:5470 call_03_5470
+
+;; 03:5488 Call 1f:7963
+
+;; 03:55c2 Call 1f:4138
+;; 03:55d9 Call 1f:4126
+
+;; 03:5693 Call 1f:4138
+;; 03:56aa Call 1f:4126
+
+;; 03:5932 Call 1f:4126
+
+;; 03:594c Call 1f:4138
+
+;; 03:59c1 Call 1f:4126
+
+;; 03:59db Call 1f:4138
+
+;; 03:79ae Call 1b:4d5c
+
+;; 03:7a6c Call 01:50dc
+
+;; 03:7a96 Call 01:50dc
+
+;; 03:7ac7 Call 01:50dc
+
+;; 03:7af8 Call 01:50dc
+
+;; 03:7b51 Call 05:439f
+;; 03:7b5e Call 00:265a then set bank to 04
+;; 03:7b77 Call 05:43d0
+;; 03:7b84 Call 00:265a then set bank to 04
+;; 03:7b9d Call 05:4330
+;; 03:7baa Call 00:265a then set bank to 04
+;; 03:7bc5 Call 05:4370
+;; 03:7bea Call 00:265a then set bank to 04
+;; 03:7c34 Call 01:4fad
+;; 03:7c45 Call 01:502c
+;; 03:7c68 Call 02:7770
+;; 03:7c90 Call 02:7b04
+;; 03:7ca3 Call 01:4da8
+
+03:7cc6 instrument_param_strings
+03:7cc6 .text:0004
+03:7cca .text:0004
+03:7cce .text:0004
+03:7cd2 .text:0004
+03:7cd6 .text:0004
+03:7cda .text:0004
+03:7cde .text:0004
+03:7ce2 .text:0007
+03:7ce9 .text:0004
+03:7ced .text:0004
+03:7cf1 .text:0004
+03:7cf5 .text:0004
+03:7cf9 .text:0004
+03:7cfd .text:0004
+03:7d01 .text:0004
+03:7d05 .text:0004
+03:7d09 .text:0007
+03:7d10 .text:0004
+03:7d14 .text:0004
+03:7d18 .text:0004
+03:7d1c .text:0004
+03:7d20 .text:0004
+
+03:7d24 .data:02dc
+
+;; 04:4001 Call 1f:6969
+
+04:4011 .data:000a
+
+04:412b .data:001b
+
+04:47d4 .data:0004
+
+04:48a5 .data:0003
+
+04:48e8 .data:0004
+
+;; 04:48a9 Call 1f:6b7e
+
+;; 04:4908 Call 01:6781
+;; 04:4916 Call 06:5a23
+
+;; 04:4b73 Call 1f:6b0f
+;; 04:4c6c Call 1f:7645
+;; 04:4c7a Call 1e:4000
+;; 04:4c8e Call 1f:62aa
+
+04:4ca0 .data:0003
+
+04:4f51 .data:0050
+
+;; 04:4ffc Call 01:4622
+;; 04:500f Call 01:4730
+
+;; 04:503f Call 1f:4a14
+
+;; 04:50ae Call 1f:4a63
+
+;; 04:51c7 Call 02:7b04
+;; 04:520f Call 02:7b04
+
+;; 04:522e Call 01:4622
+
+;; 04:5278 Call 01:71e0
+
+04:558d call_04_558d
+
+;; 04:57df Call 1f:4a14
+
+;; 04:5827 Call 1f:4a14
+
+;; 04:587d Call 01:4622
+;; 04:58cf Call 01:71e0
+
+;; 04:5986 Call 01:700d
+
+;; 04:59f1 Call 1f:7257
+
+;; 04:5a2d Call 1f:7257
+
+;; 04:5aa6 Call 1f:7257
+
+;; 04:5b72 Call 1f:7257
+
+;; 04:5dc7 Call 1f:6b0f
+
+;; 04:5f91 Call 01:700d
+
+;; 04:625e Call 1f:6b0f
+
+;; 04:642d Call 01:700d
+
+;; 04:6752 Call 1f:6b0f
+
+;; 04:6950 Call 01:700d
+
+;; 04:6c83 Call 1f:6b0f
+
+;; 04:6e85 Call 01:700d
+
+;; 04:6fbe Call 1f:6513
+;; 04:6fe7 Call 1f:651d
+
+;; 04:7424 Call 1f:6527 then set bank to 01
+
+;; 04:74a3 Call 1f:7257
+;; 04:74d2 Call 02:7770
+;; 04:7511 Call 02:7b04
+;; 04:753a Call 05:4330
+;; 04:7547 Call 00:265a then set bank to 04
+
+;; 04:75ad Call 05:43d0
+;; 04:75ba Call 00:265a then set bank to 07
+;; 04:75e3 Call 05:439f
+;; 04:75f0 Call 00:265a then set bank to 07
+
+;; 04:765d Call 05:4370
+;; 04:766a Call 05:4370
+;; 04:7674 Call 00:265a then set bank to 07
+;; 04:7687 Call 05:4370
+;; 04:76d0 Call 00:265a then set bank to 04
+
+;; 04:770e Call 1f:6527 then set bank to 00
+
+;; 04:7805 Call 1f:6527 then set bank to 00
+
+04:7908 call_04_7908
+
+04:7a03 .data:0004
+
+04:7a9c sync_strings_1
+04:7a9c .text:0005
+04:7aa1 .text:0005
+04:7aa6 .text:0005
+04:7aab .text:0005
+
+04:7ae5 sync_strings_2
+04:7ae5 .text:0005
+04:7aea .text:0005
+04:7aef .text:0005
+
+04:7af4 call_04_7af4
+
+04:7b57 sync_strings_3
+04:7b57 .text:0005
+04:7b5c .text:0005
+04:7b61 .text:0005
+04:7b66 .text:0005
+
+04:7b6b call_04_7b6b
+
+04:7daf .data:0251
+
+05:4000 call_05_4000
+
+05:4269 .data:000d
+
+05:4330 call_05_4330
+
+05:4370 call_05_4370
+
+05:439f call_05_439f
+
+05:43d0 call_05_43d0
+
+05:43ed call_05_43ed
+
+05:4435 .data:0012
+
+;; 05:48cc Call 01:6781
+
+;; 05:4a78 Call 1f:7645
+
+05:4de6 call_05_4de6
+
+;; 05:4fe1 Call 01:700d
+
+;; 05:52cc Call 01:700d
+
+;; 05:55f0 Call 01:700d
+
+;; 05:5912 Call 01:700d
+
+;; 05:5c4d Call 01:700d
+
+;; 05:6020 Call 02:7770
+
+;; 05:6048 Call 02:7b04
+
+;; 05:6063 Call 05:439f
+;; 05:6070 Call 00:265a then set bank to 01
+
+;; 05:61c3 Call 05:43d0
+;; 05:61d0 Call 00:265a then set bank to 01
+
+;; 05:61ef Call 05:4330
+;; 05:61fc Call 00:265a then set bank to 05
+
+;; 05:65de Call 1c:6272
+
+;; 05:6912 Call 01:66b8
+
+05:6aee .data:1512
+
+06:4022 .data:0004
+
+;; 06:425f Call 01:6781
+
+;; 06:42c0 Call 1f:7645
+
+06:43b4 text_to_speech_screen_strings
+06:43b4 .text:0006
+06:43ba .text:0006
+
+06:43d7 call_06_43d7
+
+;; 06:48b1 Call 05:4330
+;; 06:48be Call 00:265a then set bank to 04
+;; 06:48d9 Call 05:439f
+;; 06:48e6 Call 00:265a then set bank to 04
+;; 06:4901 Call 05:43d0
+;; 06:490e Call 00:265a then set bank to 04
+;; 06:492e Call 02:7770
+;; 06:4956 Call 02:7b04
+
+06:49ad .data:0010
+
+;; 06:4db5 Call 01:6781
+
+;; 06:4f41 Call 05:4000
+
+06:4f52 .data:0011
+
+06:4f63 wave_screen_title_string
+06:4f63 .text:0006
+
+06:50d7 .data:0011
+
+06:551d call_06_551d
+
+;; 06:5699 Call 02:7770
+
+;; 06:56c1 Call 02:7b04
+;; 06:56e1 Call 05:4330
+;; 06:56ee Call 00:265a then set bank to 07
+;; 06:5723 Call 05:43ed
+;; 06:5730 Call 00:265a then set bank to 07
+;; 06:5750 Call 05:43d0
+;; 06:575d Call 00:265a then set bank to 07
+
+06:596e .data:0006
+
+06:5a4f .data:0003
+
+;; 06:5da0 Call 01:6781
+
+;; 06:5f09 Call 1f:7645
+
+06:5f24 .data:0004
+
+;; 06:610a Call 01:4a1b
+
+;; 06:616c Call 01:4a1b
+
+;; 06:6185 Call 01:4863
+
+06:606c call_06_606c
+
+;; 06:706c Call 01:4a1b
+
+;; 06:70e0 Call 01:6f8b
+;; 06:711c Call 02:7770
+;; 06:715b Call 02:7b04
+
+;; 06:71c5 Call 01:6fe4
+;; 06:71de Call 05:4370
+;; 06:71eb Call 00:265a then set bank to 04
+;; 06:7219 Call 05:4330
+;; 06:7226 Call 00:265a then set bank to 04
+;; 06:724f Call 05:439f
+;; 06:725c Call 00:265a then set bank to 07
+;; 06:7285 Call 05:43d0
+;; 06:7292 Call 00:265a then set bank to 07
+
+;; 06:759e Call 1c:6272
+
+;; 06:770e Call 01:66b8
+
+06:7844 .data:07bc
+
+07:4039 .data:000c
+
+;; 07:4139 Call 1f:4ab2
+
+;; 07:4222 Call 01:4a1b
+
+;; 07:4239 Call 01:6f8b
+
+;; 07:4426 Call 01:66b8
+
+;; 07:44a0 Call 01:6781
+;; 07:44b7 Call 1f:7645
+;; 07:44cb Call 05:4000
+
+07:4970 .data:0003
+
+07:49b3 call_07_49b3
+
+;; 07:4a54 Call 1f:4ab2
+
+;; 07:4aad Call 01:48cf
+
+;; 07:4ad3 Call 1f:4ab2
+
+;; 07:4faa Call 05:439f
+;; 07:4fb7 Call 00:265a then set bank to 07
+;; 07:4fe0 Call 05:43d0
+;; 07:4fed Call 00:265a then set bank to 07
+
+;; 07:52c5 Call 02:6c3a
+;; 07:52de Call 02:7b04
+;; 07:52ec Call 02:7b04
+;; 07:5333 Call 02:6c25
+;; 07:5347 Call 02:7b04
+
+;; 07:53a5 Call 01:6fc6
+;; 07:53ed Call 05:4370
+;; 07:53fa Call 00:265a then set bank to 04
+
+07:5d87 .data:0400
+
+07:5d3c call_07_5d3c
+
+07:6326 .data:0002
+
+;; 07:64ca Call 01:7003
+
+07:66f9 call_07_66f9
+
+07:6904 digits_string
+07:6904 .text:0011
+;; 07:6904 gbdk 2.95 libc/gb/digits.c:digits
+
+;; 07:691b Call 01:4622
+
+;; 07:69c8 Call 01:71e0
+
+07:6a51 .text:0005
+07:6a56 .text:0005
+07:6a5b .text:0005
+07:6a60 .text:0005
+07:6a65 .text:0005
+
+07:6a6a call_07_6a6a
+
+;; 07:6e3d Call 02:456d
+
+07:67f2 .data:0100
+
+07:6ff4 pulse_channel_combo_strings
+07:6ff4 .text:0006
+07:6ffa .text:0006
+07:7000 .text:0006
+07:7006 .text:0006
+07:700c .text:0006
+07:7012 .text:0006
+
+;; 07:704e Call 04:48b9
+
+;; 07:712d Call 04:48b9
+
+07:7223 call_07_7223
+
+;; 07:7231 Call 01:66b8
+
+07:730a keyboard_calibration_strings
+07:730a .text:0015
+07:731f .text:0013
+07:7332 .text:0011
+07:7343 .text:000b
+07:734e .text:0006
+07:7354 .text:0004
+
+07:755c .data:0aa4
+
+;; 1b:4000 Unknown dynamically-executed code related to samples
+1b:4000 dynamic_call_samples
+
+1b:4058 .data:0040
+
+1b:4098 help_page_index_strings
+1b:4098 .text:000f
+1b:40a7 .text:000a
+1b:40b1 .text:0005
+1b:40b6 .text:0005
+1b:40bb .text:0006
+1b:40c1 .text:0007
+1b:40c8 .text:0006
+1b:40ce .text:0007
+1b:40d5 .text:0006
+1b:40db .text:000e
+1b:40e9 .text:0011
+1b:40f9 .text:000e
+
+1b:4107 help_page_strings
+1b:4107 .text:00cf
+1b:41d6 .text:00aa
+1b:4280 .text:00e5
+1b:4365 .text:00e4
+1b:4449 .text:00e1
+1b:452a .text:004d
+1b:4577 .text:007d
+1b:45f4 .text:00ea
+1b:46de .text:00ec
+1b:47ca .text:0080
+
+;; 1b:4900 Call 01:50dc
+
+;; 1b:4968 Call 00:265a then set bank to 04
+
+;; 1b:4d6f Call 01:4622
+
+1b:4a05 .data:0014
+
+1b:4a19 call_1b_4a19
+
+1b:4ad9 data_keyboard_key_labels
+1b:4ad9 .text:000b
+1b:4ae4 .text:000b
+1b:4aef .text:000b
+1b:4afa .text:0006
+1b:4b00 .data:0005
+
+1b:4d5c call_1b_4d5c
+
+1b:5060 save_as_strings
+1b:5060 .text:0009
+1b:5069 .text:0006
+
+1b:506f call_1b_506f
+
+;; 1b:5224 Call 1c:5098
+
+;; 1b:5265 Call 1c:4e10
+
+;; 1b:5321 Call 01:4730
+
+;; 1b:53d6 Call 00:265a then set bank to 03
+
+;; 1b:5590 Call 00:265a then set bank to 03
+
+1b:55a9 save_progress_strings
+1b:55a9 .text:000a
+1b:55b3 .text:0006
+1b:55b9 .text:000f
+1b:55c8 .text:0006
+1b:55ce .text:0006
+
+1b:563f font_1_name
+1b:563f .text:0005
+1b:5644 font_2_name
+1b:5644 .text:0005
+1b:5649 font_3_name
+1b:5649 .text:0005
+
+1b:564e dmg_palette_1_name
+1b:564e .text:0005
+1b:5653 dmg_palette_2_name
+1b:5653 .text:0005
+1b:5658 .data:0014
+
+1b:566c palette_1_name
+1b:566c .text:0005
+1b:5671 palette_2_name
+1b:5671 .text:0005
+1b:5676 palette_3_name
+1b:5676 .text:0005
+1b:567b palette_4_name
+1b:567b .text:0005
+1b:5680 palette_5_name
+1b:5680 .text:0005
+1b:5685 palette_6_name
+1b:5685 .text:0005
+
+1b:5688 .data:0028
+
+1b:5786 .data:0003
+
+1b:58de project_screen_param_strings
+1b:58de .text:0007
+1b:58e5 .text:0007
+1b:58ec .text:0007
+1b:58f3 .text:0007
+1b:58fa .text:0007
+1b:5901 .text:0007
+1b:5908 .text:000c
+1b:5914 .text:000c
+1b:5920 .text:000e
+
+1b:5b22 .data:0003
+
+1b:5b72 prelisten_strings
+1b:5b72 .text:0004
+1b:5b76 .text:0004
+1b:5b7a .text:0004
+
+1b:5c1f stat_strings
+1b:5c1f .text:0009
+1b:5c28 .text:000b
+
+;; 1b:5c36 Call 1c:4057
+;; 1b:5c48 Call 01:6781
+
+1b:5e51 project_screen_option_strings
+1b:5e51 .text:0007
+1b:5e58 .text:000b
+1b:5e63 .text:0006
+1b:5e69 .text:0007
+1b:5e70 .text:0005
+1b:5e75 .text:0005
+1b:5e7a .text:0012
+1b:5e8c .text:000b
+1b:5e97 .text:0005
+1b:5e9c .text:0010
+1b:5eac .text:0011
+1b:5ebd .text:000f
+1b:5ecc .text:000d
+1b:5ed9 .text:0006
+1b:5edf .text:000d
+
+;; 1b:5f0a Call 01:50dc
+
+;; 1b:5f1b Call 05:4000 (same address as dynamic_call_samples)
+
+1b:5f2f call_1b_5f2f
+
+;; 1b:5fed Call 05:43d0
+;; 1b:5ffa Call 00:265a then set bank to 05
+
+;; 1b:6028 Call 05:4370
+;; 1b:6035 Call 00:265a then set bank to 04
+
+;; 1b:60b3 Call 07:5d3c
+
+;; 1b:61c5 Call call_set_lsdj_palette at 01:47fc
+
+;; 1b:6287 Call call_set_lsdj_palette at 01:47fc
+;; 1b:62c2 Call 07:5d3c
+
+;; 1b:642c Call 1e:7a0c
+;; 1b:6452 Call 07:5d3c
+
+;; 1b:6522 Call 07:5d3c
+
+;; 1b:65a2 Call 1e:7a0c
+
+;; 1b:682f Call 1c:47b1
+
+;; 1b:68ac Call 07:5d3c
+;; 1b:68f9 Call 1f:60e4
+;; 1b:690f Call 1c:5098
+;; 1b:68d3 Call 1c:5098
+;; 1b:6935 Call 1f:61b8
+;; 1b:6950 Call 00:265a then set bank to 04
+;; 1b:696c Call 1c:5098
+;; 1b:697a Call 07:7223
+;; 1b:698a Call 00:265a then set bank to 04
+
+;; 1b:69bc Call 1c:5689
+;; 1b:69ca Call 00:265a then set bank to 04
+
+;; 1b:6b07 Call 1c:5098
+;; 1b:6b50 Call 1c:47b1
+;; 1b:6b5e Call call_reset_external_ram at 01:429c
+;; 1b:6b7d Call 1c:4a46
+
+;; 1b:6bc8 Call 01:76a3
+;; 1b:6be8 Call 01:50dc
+;; 1b:6bf6 Call 00:265a
+;; 1b:6c04 Call 05:4000 (same address as dynamic_call_samples)
+;; 1b:6c35 Call 01:50dc
+;; 1b:6c46 Call 05:4000 (same address as dynamic_call_samples)
+;; 1b:6c73 Call 02:7b04
+
+1b:6c9b .data:0038
+
+1b:72f6 call_1b_72f6
+
+1b:7393 call_init_samples
+;; 1b:7393 Initialize unknown dynamically-executed code and data related to samples.
+;; 1b:7393 TODO: document this further
+;; 1b:739d Write all of 1b:7451 into d000
+;; 1b:73ae Copy code from 4000-401b plus extra instructions to memory 16 times
+1b:73b2 .jump_copy_16x_loop
+;; 1b:73ba Initialize "copy from" address
+1b:73c3 .jump_copy_loop
+;; 1b:73c3 Copy byte
+;; 1b:73d5 Increment "copy to" address
+;; 1b:73eb Increment "copy from" address
+;; 1b:7401 Jump back if not done copying
+;; 1b:741b Skip these instructions if on last loop
+;; 1b:7423 Copy "inc c" instruction and increment "copy to" address
+1b:7431 .jump_copy_inc_c_instruction_end
+;; 1b:7431 Copy "inc e" instruction and increment "copy to" address
+1b:743f .jump_copy_inc_e_instruction_end
+;; 1b:743f Increment loop counter and jump back
+1b:7445 .jump_copy_16x_loop_end
+;; 1b:7445 Copy "ret" instruction and clean up
+
+1b:7451 .data:0baf
+
+1c:4047 .data:0010
+
+1c:4057 call_1c_4057
+
+1c:40f2 call_1c_40f2
+
+1c:43b9 .data:0008
+
+1c:47a3 .data:000e
+
+1c:47b1 call_1c_47b1
+
+1c:4c11 .data:0009
+
+1c:4e10 call_1c_4e10
+
+1c:5092 .data:0006
+
+;; 1c:5203 Call 00:265a then set bank to 01
+
+;; 1c:526d Call call_reset_external_ram at 01:429c
+
+;; 1c:531a Call 01:76a3
+;; 1c:5337 Call 00:265a then set bank to 01
+
+1c:534e loading_progress_strings
+1c:534e .text:000d
+1c:535b .text:0006
+
+1c:589e .data:000f
+
+;; 1c:58ae Call 01:6781
+
+1c:5970 file_screen_strings
+1c:5970 .text:0005
+1c:5975 .text:0005
+1c:597a .text:0006
+1c:5980 .text:0011
+1c:5991 .text:0003
+1c:5994 .text:0003
+
+1c:5abc call_1c_5abc
+
+;; 1c:5af8 Call 02:7770
+
+;; 1c:5bec Call 01:50dc
+
+;; 1c:5d56 Call 1b:4d5c
+
+;; 1c:5ee3 Call 01:50dc
+
+;; 1c:5f1e Call 00:265a then set bank to 07
+
+1c:616f erase_file_strings
+1c:616f .text:000d
+1c:617c .text:0010
+1c:618c .text:0011
+1c:619d .text:0004
+1c:61a1 .text:0003
+1c:61a4 .text:0008
+1c:61ac .text:0007
+1c:61b3 .text:0004
+1c:61b7 .text:0003
+
+1c:6272 call_1c_6272
+
+1c:63b5 call_1c_63b5
+
+1c:64e1 .data:0062
+
+1c:6678 .data:1988
+
+1d:4058 .data:0002
+
+;; 1d:4127 Call 01:6781
+
+;; 1d:431f Call 1f:7645
+
+1d:433d groove_screen_strings
+1d:433d .text:0008
+1d:4345 .text:000e
+1d:4353 .text:0003
+1d:4356 .text:0004
+1d:435a .text:0005
+
+1d:454b .data:0003
+
+1d:4585 call_1d_4585
+
+;; 1d:4c07 Call 02:7770
+
+;; 1d:4c2f Call 02:7b04
+;; 1d:4c4a Call 05:439f
+;; 1d:4c57 Call 00:265a and set bank to 05
+
+;; 1d:4de8 Call 1c:6272
+
+;; 1d:4e6e Call 01:50dc
+
+1d:4f32 call_1d_4f32
+
+1d:50ca .data:02a0
+
+1d:5d43 call_1d_5d43
+
+1d:5df3 .data:0030
+
+1d:5ff2 resync_type_strings
+1d:5ff2 .text:0007
+1d:5ff9 .text:0007
+1d:6000 .text:0007
+
+1d:60e6 filter_type_strings
+1d:60e6 .text:0006
+1d:60ec .text:0006
+1d:60f2 .text:0006
+1d:60f8 .text:0006
+1d:60fe .text:0006
+1d:6104 .text:0006
+
+1d:617f .data:0016
+
+1d:6320 distortion_type_strings
+1d:6320 .text:0005
+1d:6325 .text:0005
+1d:632a .text:0005
+
+;; 1d:636a Call 01:6781
+
+;; 1d:638f Call 1f:7645
+
+;; 1d:6702 Call 05:4000
+
+;; 1d:6cbc Call 00:265a then set bank to 01
+
+1d:6713 wave_screen_strings
+1d:6713 .text:0007
+1d:671a .text:0007
+1d:6721 .text:0007
+1d:6728 .text:0005
+1d:672d .text:0006
+1d:6733 .text:0009
+1d:673c .text:0003
+1d:673f .text:0007
+1d:6746 .text:0006
+1d:674c .text:0007
+1d:6753 .text:0006
+1d:6759 .text:0007
+1d:6760 .text:0003
+1d:6763 .text:0003
+
+1d:6c98 hand_drawn_waves_warning_strings
+1d:6c98 .text:000a
+1d:6ca2 .text:000b
+1d:6cad .text:0007
+1d:6cb4 .text:0004
+1d:6cb8 .text:0003
+
+1d:6f27 call_1d_6f27
+
+;; 1d:7995 Call 02:7770
+;; 1d:79bd Call 02:7b04
+;; 1d:79dd Call 05:43d0
+;; 1d:79ff Call 05:4330
+;; 1d:7a21 Call 05:43ed
+
+;; 1d:7aa9 Call 1c:6272
+
+1d:7b6a .data:0496
+
+1e:4000 call_1e_4000
+
+1e:42da .data:0062
+
+1e:433c tileset
+1e:433c .image:0300:w64
+
+1e:463c .data:0082
+
+1e:46be font_3_content
+1e:46be .image:00470:w64
+1e:4b2e .data:0a26
+1e:5554 font_1_content
+1e:5554 .image:00470:w64
+1e:59c4 .data:0a26
+1e:63ea font_2_content
+1e:63ea .image:00470:w64
+1e:685a .data:11b2
+
+1e:7a0c call_1e_7a0c
+
+1e:7af0 .data:0510
+
+1f:403e table_play_type_strings
+1f:403e .text:0005
+1f:4043 .text:0005
+1f:4048 .text:0005
+
+1f:4095 .text:0004
+
+1f:40e2 kit_loop_type_strings
+1f:40e2 .text:0004
+1f:40e6 .text:0004
+1f:40ea .text:0004
+
+1f:41ea .data:0007
+
+1f:41f1 call_1f_41f1
+
+;; 1f:42b2 Call 01:4cf4
+;; 1f:42cd Call 01:4d82
+
+1f:434a instrument_length_strings
+1f:434a .text:0006
+1f:4350 .text:0004
+
+1f:4354 call_1f_4354
+
+1f:4426 noise_instrument_param_strings
+1f:4426 .text:0006
+1f:442c .text:0004
+1f:4430 .text:0007
+1f:4437 .text:0007
+
+1f:446b call_1f_446b
+
+;; 1f:4598 Call 03:4b4b
+
+;; 1f:469f Call 01:4cf4
+
+;; 1f:476c Call 01:4cf4
+;; 1f:4787 Call 01:4d82
+
+;; 1f:4824 Call 03:4aa1
+;; 1f:4832 Call 03:4b13
+;; 1f:4840 Call 03:4acd
+
+1f:46c4 .text:0004
+1f:46c8 .text:0004
+1f:46cc .text:0004
+1f:46d0 .text:0004
+
+1f:46d4 call_1f_46d4
+
+1f:49d5 call_1f_49d5
+
+1f:4a14 call_1f_4a14
+
+1f:4a63 call_1f_4a63
+
+1f:4ab2 call_1f_4ab2
+
+;; 1f:4b11 Call 01:48cf
+;; 1f:4b4b Call 01:6f8b
+
+;; 1f:4cb8 Call 01:4730
+
+;; 1f:4f89 Call 01:4b01
+
+;; 1f:51b6 Call 01:49ab
+
+;; 1f:5248 Call 01:4ac1
+
+;; 1f:52f5 Call 01:4863
+
+;; 1f:5315 Call 01:4ac1
+
+;; 1f:5879 Call 01:493b
+;; 1f:58be Call 01:49ab
+
+1f:60e4 call_1f_60e4
+
+1f:6184 dedup_song_strings
+1f:6184 .text:000b
+1f:618f .text:0009
+1f:6198 .text:000b
+1f:61a3 .text:0003
+1f:61a6 .text:000b
+1f:61b1 .text:0003
+1f:61b4 .text:0004
+
+1f:61b8 call_1f_61b8
+
+1f:6268 dedup_instruments_strings
+1f:6268 .text:000b
+1f:6273 .text:0009
+1f:627c .text:000b
+1f:6287 .text:0003
+1f:628a .text:000b
+1f:6295 .text:0003
+1f:6298 .text:000b
+1f:62a3 .text:0003
+1f:62a6 .text:0004
+
+1f:62aa call_1f_62aa
+
+1f:63b1 .data:001e
+
+;; 1f:64f3 Call 04:48f4
+;; 1f:6501 Call 1e:4000
+
+1f:6513 call_1f_6513
+
+1f:651d call_1f_651d
+
+1f:6527 call_1f_6527
+
+;; 1f:6900 Call 1c:6272
+;; 1f:691e Call 04:48f4
+
+1f:6969 call_1f_6969
+
+1f:6b0f call_1f_6b0f
+
+1f:6b79 .data:0005
+
+1f:6b7e call_1f_6b7e
+
+1f:7633 song_screen_instrument_window_strings
+1f:7633 .text:0005
+1f:7638 .text:0002
+1f:763a .text:0002
+1f:763c .text:0005
+1f:7641 .text:0004
+
+1f:7645 call_1f_7645
+
+;; 1f:766b Call 00:265a then set bank to 04
+
+1f:77f2 call_1f_77f2
+
+;; 1f:77fa Call 01:50dc
+;; 1f:7808 Call 1f:7645
+;; 1f:781b Call 03:476d
+
+1f:7955 type_speech_string
+1f:7955 .text:000e
+
+1f:7963 call_1f_7963
+
+;; 1f:7aa1 Call 1b:4d5c
+
+;; 1f:7b40 Call 05:43d0
+;; 1f:7b5d Call 05:439f
+;; 1f:7b7a Call 05:4370
+;; 1f:7b97 Call 05:4330
+
+;; 1f:7faa Call 02:7770
+;; 1f:7fd2 Call 02:7b04
+
+1f:7feb .data:0015
+
+; Memory
+
+00:9800 BG_MAP_ATTR_CHUNK_0_START
+;; 00:9800 This section of memory contains the actual background map tiles in VRAM
+;; 00:9800 Background map tile memory continues through 0x9a40
+;; 00:9800 Each tile is one byte, each chunk is 6 lines, each line is 32 tiles
+;; 00:9800 Lines have 0xd bytes of offscreen tiles at the end
+;; 00:9800 Not to be confused with BG_MAP_ATTR_CHUNK_*_DATA_START, which contains the data to write to these addresses
+00:98c0 BG_MAP_ATTR_CHUNK_1_START
+00:9980 BG_MAP_ATTR_CHUNK_2_START
+
+00:9C00 BG_MAP_ATTR_CHUNK_0_START_ALT
+;; 00:9C00 Alternate location for background map tiles if LCDC bit 3 is set.
+00:9cc0 BG_MAP_ATTR_CHUNK_1_START_ALT
+00:9c80 BG_MAP_ATTR_CHUNK_2_START_ALT
+
+00:c0a0 MOD_PU1_FLAG
+;; 00:c0a0 The high byte enables mute/pan on the pulse 1 channel
+00:c0a1 MOD_PU2_FLAG
+;; 00:c0a1 The high byte enables mute/pan on the pulse 2 channel
+00:c0a2 MOD_WAV_FLAG
+;; 00:c0a2 The high byte enables mute/pan on the wave channel
+00:c0a3 MOD_NOI_FLAG
+;; 00:c0a3 The high byte enables mute/pan on the noise channel
+00:c0a4 MOD_PU1_TYPE
+;; 00:c0a4 Sets mute (0), left pan (1), or right pan (2) for the pulse 1 channel
+00:c0a5 MOD_PU2_TYPE
+;; 00:c0a5 Sets mute (0), left pan (1), or right pan (2) for the pulse 2 channel
+00:c0a6 MOD_WAV_TYPE
+;; 00:c0a6 Sets mute (0), left pan (1), or right pan (2) for the wave channel
+00:c0a7 MOD_NOI_TYPE
+;; 00:c0a7 Sets mute (0), left pan (1), or right pan (2) for the noise channel
+
+00:c0cc CURRENT_PU1_NOTE
+00:c0cd CURRENT_PU2_NOTE
+00:c0ce CURRENT_WAV_NOTE
+00:c0cf CURRENT_NOI_NOTE
+
+00:c160 PU1_NOTE_COUNTDOWN
+;; 00:c160 Counts down the time the current note has been playing on the pulse 1 channel. Resets to 0 when the next note starts
+00:c161 PU2_NOTE_COUNTDOWN
+;; 00:c161 Counts down the time the current note has been playing on the pulse 2 channel. Resets to 0 when the next note starts
+00:c162 WAV_NOTE_COUNTDOWN
+;; 00:c162 Counts down the time the current note has been playing on the wave channel. Resets to 0 when the next note starts
+00:c163 NOI_NOTE_COUNTDOWN
+;; 00:c163 Counts down the time the current note has been playing on the noise channel. Resets to 0 when the next note starts
+
+00:c16c CURRENT_PU1_PHRASE_ROW
+00:c16d CURRENT_PU2_PHRASE_ROW
+00:c16e CURRENT_WAV_PHRASE_ROW
+00:c16f CURRENT_NOI_PHRASE_ROW
+
+00:c17c CURRENT_PU1_CHAIN_ROW
+00:c17d CURRENT_PU2_CHAIN_ROW
+00:c17e CURRENT_WAV_CHAIN_ROW
+00:c17f CURRENT_NOI_CHAIN_ROW
+
+00:c200 CURRENT_PU1_SONG_ROW
+00:c201 CURRENT_PU2_SONG_ROW
+00:c202 CURRENT_WAV_SONG_ROW
+00:c203 CURRENT_NOI_SONG_ROW
+
+00:c210 CURRENT_PU1_INSTR
+00:c211 CURRENT_PU2_INSTR
+00:c212 CURRENT_WAV_INSTR
+00:c213 CURRENT_NOI_INSTR
+
+00:c3fe CURRENT_SCREEN
+;; 00:c3fe 0x01: phrase screen
+;; 00:c3fe 0x02: groove screen
+;; 00:c3fe 0x03: chain screen
+;; 00:c3fe 0x04: song screen
+;; 00:c3fe 0x05: table screen
+;; 00:c3fe 0x06: instrument screen
+;; 00:c3fe 0x07: crash screen
+;; 00:c3fe 0x08: synth screen
+;; 00:c3fe 0x09: project screen
+;; 00:c3fe 0x0a: wave editor screen
+;; 00:c3fe 0x0b: talk screen
+;; 00:c3fe 0x0c: word screen
+;; 00:c3fe 0x0d: file screen
+;; 00:c3fe 0x0e: help screen
+
+00:c3ff DMG_SOUND_ON
+;; 00:c33f Indicates if sound was on at startup for DMG
+
+00:c403 KEY_DELAY_COUNTER
+;; 00:c403 Counts down key delay while a button is pressed
+00:c404 KEY_REPEAT_COUNTER
+;; 00:c404 Counts down key repeat while a button is pressed
+
+00:c410 CURSOR_MODE
+;; 00:c410 0x02: normal mode
+;; 00:c410 0x04: select mode
+
+00:c411 CURRENT_PHRASE
+;; 00:c411 Current phrase opened on the song screen
+
+00:c412 PHRASE_CURSOR_COL
+00:c413 PHRASE_CURSOR_ROW
+00:c414 CURRENT_GROOVE_SCREEN
+00:c415 CURRENT_CHAIN_SCREEN
+00:c416 CHAIN_CURSOR_COL
+00:c417 CHAIN_CURSOR_ROW
+00:c418 CURRENT_TABLE_SCREEN
+00:c419 SONG_SCREEN_SCROLL
+00:c41a SONG_CURSOR_COL
+00:c41b SONG_CURSOR_ROW
+00:c424 INSTR_CURSOR_ROW
+00:c425 INSTR_CURSOR_COL
+00:c426 SPEECH_CURSOR_POS
+00:c427 CURRENT_WAV_FRAME_SCREEN
+00:c428 WAV_CURSOR_COL
+00:c429 WAV_CURSOR_BLINK
+
+00:c42a INSTR_NAME_LETTER_POS
+00:c42b INSTR_NAME_CURSOR_COL
+00:c42c INSTR_NAME_CURSOR_ROW
+
+00:c43f CURRENT_SYNTH_SCREEN
+00:c440 SYNTH_CURSOR_POS
+
+00:c44b DEFAULT_PU1_NOTE
+;; 00:c44b The default note to use for empty pulse 1 channel rows on the phrase screen
+00:c44c DEFAULT_PU2_NOTE
+;; 00:c44c The default note to use for empty pulse 2 channel rows on the phrase screen
+00:c44d DEFAULT_WAV_NOTE
+;; 00:c44d The default note to use for empty wave channel rows on the phrase screen
+00:c44e DEFAULT_NOI_NOTE
+;; 00:c44e The default note to use for empty noise channel rows on the phrase screen
+00:c44f DEFAULT_CMD
+;; 00:c44f The default command to use for empty rows
+
+00:c460 DEFAULT_PU1_INSTR
+;; 00:c460 The default instrument number to use for empty rows on the pulse 1 phrase screen
+00:c461 DEFAULT_PU2_INSTR
+;; 00:c461 The default instrument number to use for empty rows on the pulse 2 phrase screen
+00:c462 DEFAULT_WAV_INSTR
+;; 00:c462 The default instrument number to use for empty rows on the wave phrase screen
+00:c463 DEFAULT_NOI_INSTR
+;; 00:c463 The default instrument number to use for empty rows on the noise phrase screen
+
+00:c46b CURSOR_BUTTON_HOLD
+
+00:c453 DEFAULT_PU1_SONG_CHAIN
+;; 00:c453 The default chain number to use for empty pulse 1 channel rows on the song screen
+00:c454 DEFAULT_PU2_SONG_CHAIN
+;; 00:c454 The default chain number to use for empty pulse 2 channel rows on the song screen
+00:c455 DEFAULT_WAV_SONG_CHAIN
+;; 00:c455 The default chain number to use for empty wave channel rows on the song screen
+00:c456 DEFAULT_NOI_SONG_CHAIN
+;; 00:c456 The default chain number to use for empty noise channel rows on the song screen
+00:c457 DEFAULT_PU1_CHAIN_PHRASE
+;; 00:c457 The default phrase number to use for empty rows on the chain screen for the pulse 1 channel
+00:c458 DEFAULT_PU2_CHAIN_PHRASE
+;; 00:c458 The default phrase number to use for empty rows on the chain screen for the pulse 2 channel
+00:c459 DEFAULT_WAV_CHAIN_PHRASE
+;; 00:c459 The default phrase number to use for empty rows on the chain screen for the wave channel
+00:c45a DEFAULT_NOI_CHAIN_PHRASE
+;; 00:c45a The default phrase number to use for empty rows on the chain screen for the noise channel
+
+00:c502 CURRENT_WAV_FRAME
+00:c506 SYNTH_KIT_FLAG
+;; 00:c506 0x00: kit, 0x01: synth
+
+00:c5c7 IS_HANDLING_EXCEPTION
+;; 00:c5c7 Set to 1 when handling an exception
+
+00:c53c CURRENT_PALETTE_NUM
+
+00:c5c4 CURRENT_BG_MAP_ATTR_CHUNK_INDEX
+;; 00:c5c4 Used to determine which part of the background map attributes to copy next
+
+00:c5c9 BG_MAP_ATTR_TARGET
+;; 00:c5c9 Used to store the next target address to write BG map attribute data into
+;; 00:c5c9 Must be within the BG map data range (0xd800 through 0xd968)
+00:c5ca BG_MAP_ATTR_TARGET_HI
+
+00:c8f5 OAM_VRAM_ADDRESS
+;; 00:c8f5 Used to store reference to an address inside OAM/VRAM
+00:c8f6 OAM_VRAM_VALUE
+;; 00:c8f6 Used to store a value to write to OAM/VRAM
+
+00:c926 SCREEN_COL
+;; 00:c926 The current screen column
+00:c927 SCREEN_ROW
+;; 00:c927 The current screen row in use
+00:c928 SCREEN_TOP_RIGHT_COL
+;; 00:c928 The current column that the top right screen is lined up with
+00:c929 TOP_RIGHT_SCREEN_TYPE
+;; 00:c929 The current screen used on the top right
+;; 00:c929 0x00: WAVE screen
+;; 00:c929 0x01: SYNTH screen
+
+00:c96c DEFAULT_TABLE_TSP
+;; 00:c96c The default transpose value to use for empty rows on the table screen
+00:c969 TABLE_CURSOR_ROW
+00:c96A TABLE_CURSOR_COL
+00:c96b DEFAULT_TABLE_VOL
+;; 00:c96b The default volume value to use for empty rows on the table screen
+
+00:c96d HELP_PAGE
+00:c96e HELP_CURSOR_ROW
+
+00:c977 DEFAULT_PU1_TSP
+;; 00:c977 The default transpose value to use for empty rows on the chain screen for the pulse 1 channel
+00:c978 DEFAULT_PU2_TSP
+;; 00:c978 The default transpose value to use for empty rows on the chain screen for the pulse 2 channel
+00:c979 DEFAULT_WAV_TSP
+;; 00:c979 The default transpose value to use for empty rows on the chain screen for the wave channel
+00:c97a DEFAULT_NOI_TSP
+;; 00:c97a The default transpose value to use for empty rows on the chain screen for the noise channel
+
+00:cbb7 CPU
+;; 00:cbb7 gbdk 2.95 libc/gb/crt0.s:__cpu
+;; 00:cbb7 GB type (GB, PGB, CGB)
+00:cbb8 CPU_2
+;; 00:cbb8 GB type 2 (used to check for GBA)
+
+00:cbb9 MODE
+;; 00:cbb9 gbdk 2.95 libc/gb/crt0.s:.mode
+;; 00:cbb9 Current mode
+
+00:cbba IO_OUT
+;; 00:cbba gbdk 2.95 libc/gb/global.s:__io_out
+;; 00:cbba IO out byte.
+
+00:cbbb IO_IN
+;; 00:cbbb gbdk 2.95 libc/gb/global.s:__io_in
+;; 00:cbbb IO in byte.
+
+00:cbbc IO_STATUS
+;; 00:cbbc gbdk 2.95 libc/gb/global.s:__io_status
+;; 00:cbbc Current status of serial IO.
+
+00:cbbf FONT_CURRENT
+;; 00:cbbf gbdk 2.95 libc/gb/font.ms:font_current
+00:cbc2 FONT_FIRST_FREE_TILE
+;; 00:cbc2 gbdk 2.95 libc/gb/font.ms:font_first_free_tile
+;; 00:cbc2 Cached copy of first free tile.
+00:cbc3 FONT_TABLE
+;; 00:cbc3 gbdk 2.95 libc/gb/font.ms:font_table
+
+00:cbd5 CURX
+;; 00:cbd5 gbdk 2.95 libc/gb/font.ms:.curx
+;; 00:cbd5 Current cursor X position.
+00:cbd6 CURY
+;; 00:cbd6 gbdk 2.95 libc/gb/font.ms:.cury
+;; 00:cbd6 Current cursor Y position.
+
+00:cbd7 RANDHI
+;; 00:cbd7 gbdk 2.95 libc/gb/rand.s:.randhi
+;; 00:cbd7 The random seed upper byte.
+00:cbd8 RANDLO
+;; 00:cbd8 gbdk 2.95 libc/gb/rand.s:.randlo
+;; 00:cbd8 The random seed lower byte.
+
+00:cbd9 FG_COLOUR
+;; 00:cbd9 gbdk 2.95 libc/gb/font.ms:.fg_colour
+00:cbda BG_COLOUR
+;; 00:cbda gbdk 2.95 libc/gb/font.ms:.bg_colour
+
+00:ff8e CURRENT_BANK
+;; 00:ff8e Used to store the current bank number for banked calls.
+
+01:d800 BG_MAP_ATTR_CHUNK_0_DATA_START
+;; 01:d800 This section of memory is reserved for the current background map attribute data to write to VRAM
+;; 01:d800 Background map attribute data continues through address 0xd968
+01:d878 BG_MAP_ATTR_CHUNK_1_DATA_START
+01:d8f0 BG_MAP_ATTR_CHUNK_2_DATA_START
+
+01:d480 DYNAMIC_SAMPLE_CODE
+;; 01:d480 Unknown dynamically-generated code related to samples
+
+; Kits
+
+08:4000 kit_1
+08:4000 .data:4000
+09:4000 kit_2
+09:4000 .data:4000
+0a:4000 kit_3
+0a:4000 .data:4000
+0b:4000 kit_4
+0b:4000 .data:4000
+0c:4000 kit_5
+0c:4000 .data:4000
+0d:4000 kit_6
+0d:4000 .data:4000
+0e:4000 kit_7
+0e:4000 .data:4000
+0f:4000 kit_8
+0f:4000 .data:4000
+10:4000 kit_9
+10:4000 .data:4000
+11:4000 kit_10
+11:4000 .data:4000
+12:4000 kit_11
+12:4000 .data:4000
+13:4000 kit_12
+13:4000 .data:4000
+14:4000 kit_13
+14:4000 .data:4000
+15:4000 kit_14
+15:4000 .data:4000
+16:4000 kit_15
+16:4000 .data:4000
+17:4000 kit_16
+17:4000 .data:4000
+18:4000 kit_17
+18:4000 .data:4000
+19:4000 kit_18
+19:4000 .data:4000
+1a:4000 kit_19
+1a:4000 .data:4000
+
+20:4000 kit_20
+20:4000 .data:4000
+21:4000 kit_21
+21:4000 .data:4000
+22:4000 kit_22
+22:4000 .data:4000
+23:4000 kit_23
+23:4000 .data:4000
+24:4000 kit_24
+24:4000 .data:4000
+25:4000 kit_25
+25:4000 .data:4000
+26:4000 kit_26
+26:4000 .data:4000
+27:4000 kit_27
+27:4000 .data:4000
+28:4000 kit_28
+28:4000 .data:4000
+29:4000 kit_29
+29:4000 .data:4000
+2a:4000 kit_30
+2a:4000 .data:4000
+2b:4000 kit_31
+2b:4000 .data:4000
+2c:4000 kit_32
+2c:4000 .data:4000
+2d:4000 kit_33
+2d:4000 .data:4000
+2e:4000 kit_34
+2e:4000 .data:4000
+2f:4000 kit_35
+2f:4000 .data:4000
+30:4000 kit_36
+30:4000 .data:4000
+31:4000 kit_37
+31:4000 .data:4000
+32:4000 kit_38
+32:4000 .data:4000
+33:4000 kit_39
+33:4000 .data:4000
+34:4000 kit_40
+34:4000 .data:4000
+35:4000 kit_41
+35:4000 .data:4000
+36:4000 kit_42
+36:4000 .data:4000
+37:4000 kit_43
+37:4000 .data:4000
+38:4000 kit_44
+38:4000 .data:4000
+39:4000 kit_45
+39:4000 .data:4000
+3a:4000 kit_46
+3a:4000 .data:4000
+3b:4000 kit_47
+3b:4000 .data:4000
+3c:4000 kit_48
+3c:4000 .data:4000
+3d:4000 kit_49
+3d:4000 .data:4000
+3e:4000 kit_50
+3e:4000 .data:4000
+3f:4000 kit_51
+3f:4000 .data:4000
